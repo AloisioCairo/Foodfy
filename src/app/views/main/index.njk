@@ -1,0 +1,80 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+  <div class="container">
+    <div class="content">
+      
+      <div class="banner">      
+        <section class="tituloBanner">
+          As melhores receitas
+          <div class="textoTitulo">
+            Aprenda a construir os melhores pratos com receitas criadas por 
+            profissionais do mundo inteiro
+          </div>
+        </section>
+        <section class="centralizar">
+          <img class="imgChefe" src="/assets/chef.svg"/>
+        </section>
+      </div>
+
+      <div class="tituloMaisAcessadas">
+        Mais acessadas
+      </div>
+
+      <div class="receitasMaisAcessadas">
+
+        {% for recipe in recipes %}                
+          <div class="receita">
+            <img class="imgReceita" src="{{ recipe.image }}" />
+            
+            <div class="tituloReceita">
+              {{ recipe.title }}
+            </div>
+            
+            <div class="autorReceita">
+              por {{ recipe.name }}
+            </div>
+          </div>
+        {% endfor %}
+<!--
+        <div class="receita">
+          <img class="imgReceita" src="/assets/salada_apimentada.svg" />
+
+          <div class="tituloReceita">
+            Hamburguer fly
+          </div>
+          
+          <div class="autorReceita">
+            por Aloisio Sampaio
+          </div>
+        </div>
+
+        <div class="receita">
+          <img class="imgReceita" src="/assets/pizza.svg" />
+
+          <div class="tituloReceita">
+            Hamburguer fly
+          </div>
+          
+          <div class="autorReceita">
+            por Aloisio Sampaio
+          </div>
+        </div>
+
+        <div class="receita">
+          <img class="imgReceita" src="/assets/salada.svg" />
+
+          <div class="tituloReceita">
+            Hamburguer fly
+          </div>
+          
+          <div class="autorReceita">
+            por Aloisio Sampaio
+          </div>
+        </div>
+-->        
+      </div>
+
+    </div>
+  </div>
+{% endblock content %}

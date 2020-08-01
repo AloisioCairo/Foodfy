@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+:root {
+  --primary-color: #f8e008;
+  --secondary-color: #f7371e;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  /*background-color: var(--primary-color);*/
+}
+
+header {
+  background-color: white;
+  width: 100%;
+  padding: 15px;
+  box-sizing: border-box; /* Configura o conteudo a toda a largura do conteudo, sendo assim 100% (width) */  
+  display: flex;
+}
+
+.container {  
+  width: 800px;
+  margin: 0 auto;
+}
+
+.links {
+  font-size: 20px;
+  text-align: right;
+}
+
+.links a {
+  text-decoration: none;
+  color: #777;
+
+  position: relative; /* Necessário para o funcionamento da class ".links a::after" */
+}
+
+.links a + a {
+  margin-left: 32px;
+}
+
+.links a.active {
+  font-weight: bold;
+  color: var(--secondary-color);
+}
+
+.links a:hover {
+  color: var(--secondary-color);
+}
+
+.links a::after {
+  content: "";
+  width: 0;
+  height: 2px;
+  background-color: var(--secondary-color);
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+
+}
+
+.links a:hover::after {
+  width: 100%;
+  transition: width 200ms ease-in-out;
+}
+
+.content {
+  background-color: white;
+  height: 100vh;  
+}
+
+.logo {
+  text-align: left;
+}
+
+.centralizar {
+  text-align: center;
+}
+
+.banner {
+  width: 100%;
+  height: 300px;
+  background-color: #FBDFDB;
+  border-radius: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.tituloBanner {
+  color: black;
+  font-weight: bold;
+  font-size: 22px;
+  padding-top: 100px;
+  padding-left: 50px;  
+  letter-spacing: 1px;
+}
+.textoTitulo {
+  width: 270px;
+  letter-spacing: 0.5px;
+  margin-top: 5px;
+  font-weight: normal;
+  font-size: 14px;  
+  line-height: 25px;
+}
+
+.imgChefe {
+  height: 250px;
+  width: 200px;
+  padding-top: 50px; 
+}
+
+.tituloMaisAcessadas {
+  font-weight: bold;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.receitasMaisAcessadas {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.receita {
+  /*width: 100%;
+  height: 200px;
+  border: 1px solid rgb(228, 223, 223);*/
+  
+  border-radius: 20px;
+  margin-bottom: 20px;
+  width: 260px;  
+}
+
+.imgReceita {  
+  width: 100%;
+  height: 176px;
+  border-radius: 25px;
+}
+
+.receita + .receita {
+  margin-left: 5px;
+}
+
+.tituloReceita {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.autorReceita {
+  margin-top: 5px;
+  font-size: 14px;
+  font-weight: normal;
+  color: darkgray;
+}
+
+.tituloSobre {
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.textoSobre {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.imgNotFound {
+  height: 0 auto;
+}
+
+.textoNotFound {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: red;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.card {
+  background-color: white;
+  width: 800px;
+  min-height: 400px;
+  margin: 45px auto;
+
+  /* Grid dividido ao meio */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  box-shadow: 0px 2px 6px -2px black; /* Insere uma sombra ao redor do card */
+
+  /* Estrutura HTML e CSS do projeto > Animando com CSS 
+  Animação */
+  animation-name: up 700ms ease;
+}
+
+
+
+
+
+
+
+/* Pagination */
+.tabel-container {
+  display: grid;
+  grid-template: 64px 1fr 16px / 1fr;  
+}
+
+.tabel-container .header{
+  margin: 0;
+  align-self: start;
+}
+
+.tabel-container .pagination {
+  margin: 0;
+  align-self: end;
+  justify-self: center;
+}
+
+.pagination a,
+.pagination span {
+  color: var(--primary-color);
+  text-decoration: none;
+  margin-right: 16px;
+}
+
+.pagination a:hover {
+  filter: brightness(0.3);
+  border-bottom: 1px solid var(--primary-color);
+}
+

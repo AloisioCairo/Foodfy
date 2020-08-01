@@ -1,0 +1,25 @@
+<html>
+    <head>            
+        {% block head %}
+            <title>Foodfy</title>
+        {% endblock %}
+        
+        <link rel="stylesheet" href="/styles.css">        
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <span class="logo">Foodfy</span>
+                <div class="links">                                    
+                    <a href="/about">Sobre</a>
+                    <a href="/recipes">Receitas</a>
+                </div>
+            </div>
+        </header>
+
+        {% block content %}
+        {% endblock %}
+
+        <script src="/scripts.js"></script>
+    </body>    
+</html>
