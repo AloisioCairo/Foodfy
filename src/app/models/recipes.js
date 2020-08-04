@@ -11,12 +11,22 @@ module.exports = {
         ORDER BY recipes."title" `, function(err, results){
         
             if (err)
-                throw `Erro na leitura dos dados no banco de dados. ${err}`
+                throw `Erro na leitura dos dados no banco de dados: Receitas mais acessadas. ${err}`
 
             callback(results.rows)
         }) 
     },
-    all(callback) {        
+    all(callback) {
+        db.query(` 
+        SELECT image, title, chefs.name FROM recipes
+        INNER JOIN chefs ON (chefs.id = recipes.chef_id)
+        ORDER BY recipes."title" `, function(err, results){
+        
+            if (err)
+                throw `Erro na leitura dos dados no banco de dados: Todas as receitas. ${err}`
+
+            callback(results.rows)
+        }) 
     },
     create (data, callback){               
     },

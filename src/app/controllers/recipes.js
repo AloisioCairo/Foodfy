@@ -8,7 +8,9 @@ module.exports = {
         })
     },
     index(req, res){
-        return res.render("recipes/index")
+        Recipes.all(function(recipes){
+            return res.render("recipes/index.njk", { recipes })
+        })        
     },
     create(req, res){        
     },

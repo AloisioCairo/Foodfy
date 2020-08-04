@@ -19,9 +19,13 @@ body {
 header {
   background-color: white;
   width: 100%;
-  padding: 15px;
-  box-sizing: border-box; /* Configura o conteudo a toda a largura do conteudo, sendo assim 100% (width) */  
-  display: flex;
+  padding: 30px;
+  box-sizing: border-box; /* Configura o conteudo a toda a largura do conteudo, sendo assim 100% (width) */
+}
+
+.menu {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .container {  
@@ -42,7 +46,7 @@ header {
 }
 
 .links a + a {
-  margin-left: 32px;
+  margin-left: 60px;
 }
 
 .links a.active {
@@ -122,7 +126,7 @@ header {
   letter-spacing: 0.5px;
 }
 
-.receitasMaisAcessadas {
+.listaReceitas {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
@@ -183,6 +187,16 @@ header {
   color: red;
 }
 
+footer {
+  height: 30px;
+  background-color: yellow;
+  bottom: 0;
+  position: fixed;
+  
+  
+  left: 0;
+  width: 100%;
+}
 
 
 

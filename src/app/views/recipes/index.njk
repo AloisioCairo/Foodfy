@@ -3,11 +3,21 @@
 {% block content %}
   <div class="container">
     <div class="content">      
-
-      <div class="textoSobre">
-        Receitas
+      <div class="listaReceitas">
+        {% for recipe in recipes %}                
+          <div class="receita">
+            <img class="imgReceita" src="{{ recipe.image }}" />
+            
+            <div class="tituloReceita">
+              {{ recipe.title }}
+            </div>
+            
+            <div class="autorReceita">
+              por {{ recipe.name }}
+            </div>
+          </div>
+        {% endfor %}      
       </div>
-      
     </div>
   </div>
 {% endblock content %}
