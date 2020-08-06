@@ -1,7 +1,7 @@
 {% extends "layout.njk" %}
 
 {% block content %}
-  <div class="container">
+  <div id="page-home" class="container">
     <div class="content">
       
       <div class="banner">      
@@ -22,59 +22,75 @@
       </div>
 
       <div class="listaReceitas">
-
-        {% for recipe in recipes %}                
+         {% for recipe in recipes %}
           <div class="receita">
-            <img class="imgReceita" src="{{ recipe.image }}" />
+            <a href="#"><img class="imgReceita" src="{{ recipe.image }}" /></a>
             
             <div class="tituloReceita">
               {{ recipe.title }}
             </div>
-            
+
             <div class="autorReceita">
               por {{ recipe.name }}
             </div>
           </div>
         {% endfor %}
+      </div>
+
 <!--
         <div class="receita">
-          <img class="imgReceita" src="/assets/salada_apimentada.svg" />
-
+          <a href="#"><img class="imgReceita" src="https://images.unsplash.com/photo-1460306855393-0410f61241c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" /></a>
+          
           <div class="tituloReceita">
-            Hamburguer fly
+            Titulo
           </div>
           
           <div class="autorReceita">
-            por Aloisio Sampaio
+            por nome
           </div>
         </div>
 
         <div class="receita">
-          <img class="imgReceita" src="/assets/pizza.svg" />
-
+          <a href="#"><img class="imgReceita" src="https://images.unsplash.com/photo-1460306855393-0410f61241c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" /></a>
+          
           <div class="tituloReceita">
-            Hamburguer fly
+            Titulo
           </div>
           
           <div class="autorReceita">
-            por Aloisio Sampaio
+            por nome
           </div>
         </div>
 
         <div class="receita">
-          <img class="imgReceita" src="/assets/salada.svg" />
-
+          <a href="#"><img class="imgReceita" src="https://images.unsplash.com/photo-1460306855393-0410f61241c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" /></a>
+          
           <div class="tituloReceita">
-            Hamburguer fly
+            Titulo
           </div>
           
           <div class="autorReceita">
-            por Aloisio Sampaio
+            por nome
           </div>
-        </div>
--->        
-      </div>
+        </div>        
+-->
 
     </div>
   </div>
+
+
+    <div id="modal" class="hide">
+      <div class="content">
+        <div class="header">
+            <img src="" id="imgModal">
+            <h1>Pontos de coleta</h1>
+            <div class="autorReceita centralizar">por ALOISIO SAMPAIO</div>
+        </div>
+        <div class="footer">
+          <a href="#">Fechar</a>
+        </div>
+      </div>
+    </div>
+
+
 {% endblock content %}

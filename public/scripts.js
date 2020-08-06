@@ -63,3 +63,58 @@ const pagination = document.querySelector(".pagination")
 if (pagination) {
     createPagination(pagination)
 }
+
+
+
+
+
+
+
+/* Modal */
+let receita = document.querySelectorAll(".receita")
+let imgReceita = document.querySelector(".receita a .imgReceita")
+const modal = document.querySelector("#modal")
+let imgModal = document.querySelector("#imgModal")
+const close = document.querySelector("#modal .footer a")
+let srcVal="";
+
+//console.log('1' + receita.getAttribute('class'));
+for (let a = 0; a < receita.length; a++) {
+
+    console.log('for' + a + '_' + receita[a]);
+        
+    receita[a].addEventListener("click", () => {
+        modal.classList.remove("hide")
+    })
+
+/*       
+    close[a].addEventListener("click", () => {
+        modal.classList.add("hide")
+    })
+    */
+}
+
+/* OK
+receita.addEventListener("click", () => {
+    modal.classList.remove("hide")
+})
+
+close.addEventListener("click", () => {
+        modal.classList.add("hide")
+})
+*/
+close.addEventListener("click", () => {
+    modal.classList.add("hide")
+})
+
+//console.log('imgReceita = ' + imgReceita.getAttribute('src'));
+for (let i = 0; i < imgReceita.length; i++) {
+    console.log('for');
+
+    imgReceita[i].addEventListener('click', function(){
+        
+        srcVal = imgReceita[i].getAttribute('src');
+        console.log('srcVal = ' + srcVal);
+        imgModal.setAttribute('src', srcVal);
+    });
+}
