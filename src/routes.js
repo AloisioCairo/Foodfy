@@ -2,16 +2,10 @@ const express = require('express')
 const routes = express.Router()
 const recipes =  require('./app/controllers/recipes')
 
-/* OK
-routes.get("/", function(req, res){        
-    return res.render("main/index.njk")
-})
-*/
-
 routes.get("/", function(req, res){
-    return res.redirect("/main")
+    return res.redirect("/courses")
 })
-routes.get("/main", recipes.maisAcessadas)
+routes.get("/courses", recipes.maisAcessadas)
 
 routes.get("/recipes", function(req, res){        
     return res.redirect("/recipes/list")

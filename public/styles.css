@@ -212,22 +212,19 @@ header {
 
 #modal .content {
   color: white;
-  width: 650px;
+  width: 500px;
   height: 320px;
   border-radius: 10px;
 }
 
-#modal .header {  
-  /*display: flex;
-  align-items: center;
-  justify-content: space-between;*/
+#modal .header {    
   height: 170px;
   padding: 10px;
 }
 
 #modal .header img {
   width: 100%;
-  height: 170px;  
+  height: 200px;
   border-radius: 10px;  
 }
 

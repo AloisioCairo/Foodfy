@@ -1,0 +1,58 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+  <div id="page-home" class="container">
+    <div class="content">
+      
+      <div class="banner">      
+        <section class="tituloBanner">
+          As melhores receitas
+          <div class="textoTitulo">
+            Aprenda a construir os melhores pratos com receitas criadas por 
+            profissionais do mundo inteiro
+          </div>
+        </section>
+        <section class="centralizar">
+          <img class="imgChefe" src="/assets/chef.svg"/>
+        </section>
+      </div>
+
+      <div class="tituloMaisAcessadas">
+        Mais acessadas
+      </div>
+
+      <div class="listaReceitas">
+         {% for recipe in recipes %}
+          <div class="receita">
+            <a href="#"><img class="imgReceita" src="{{ recipe.image }}" /></a>
+            
+            <div class="tituloReceita" id="temp">
+              {{ recipe.title }}
+            </div>
+
+            <div class="autorReceita">
+              por {{ recipe.name }}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+
+  <div id="modal" class="hide">
+    <div class="content">
+      <div class="header">
+          <img src="" id="imgModal">
+          <h1>...</h1>
+          <div class="autorReceita centralizar">
+            por ...
+          </div>
+      </div>
+      <div class="footer">
+        <a href="#">Fechar</a>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}

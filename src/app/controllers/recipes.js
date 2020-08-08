@@ -4,7 +4,7 @@ const Recipes = require('../models/recipes')
 module.exports = {    
     maisAcessadas(req, res){
         Recipes.maisAcessadas(function(recipes){
-            return res.render(`main/index.njk`, { recipes })
+            return res.render(`courses.njk`, { recipes })
         })
     },
     index(req, res){

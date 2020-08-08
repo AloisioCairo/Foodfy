@@ -71,50 +71,33 @@ if (pagination) {
 
 
 /* Modal */
-let receita = document.querySelectorAll(".receita")
-let imgReceita = document.querySelector(".receita a .imgReceita")
+const receita = document.querySelectorAll(".receita")
 const modal = document.querySelector("#modal")
-let imgModal = document.querySelector("#imgModal")
 const close = document.querySelector("#modal .footer a")
-let srcVal="";
 
-//console.log('1' + receita.getAttribute('class'));
-for (let a = 0; a < receita.length; a++) {
-
-    console.log('for' + a + '_' + receita[a]);
-        
+for (let a = 0; a < receita.length; a++) {        
     receita[a].addEventListener("click", () => {
         modal.classList.remove("hide")
     })
-
-/*       
-    close[a].addEventListener("click", () => {
-        modal.classList.add("hide")
-    })
-    */
 }
 
-/* OK
-receita.addEventListener("click", () => {
-    modal.classList.remove("hide")
-})
-
-close.addEventListener("click", () => {
-        modal.classList.add("hide")
-})
-*/
 close.addEventListener("click", () => {
     modal.classList.add("hide")
 })
 
-//console.log('imgReceita = ' + imgReceita.getAttribute('src'));
-for (let i = 0; i < imgReceita.length; i++) {
-    console.log('for');
+let imgReceita = document.querySelectorAll(".imgReceita")
+let tituloReceita = document.querySelectorAll(".tituloReceita")
+let autorReceita = document.querySelectorAll(".autorReceita")
 
+let imgModal = document.querySelector("#imgModal")
+let tituloModal = document.querySelector("#modal h1")
+let autorModal = document.querySelector("#modal .autorReceita")
+
+for (let i = 0; i < receita.length; i++) {
     imgReceita[i].addEventListener('click', function(){
-        
-        srcVal = imgReceita[i].getAttribute('src');
-        console.log('srcVal = ' + srcVal);
-        imgModal.setAttribute('src', srcVal);
-    });
+    
+        imgModal.setAttribute('src', imgReceita[i].getAttribute('src'));
+        tituloModal.innerHTML = tituloReceita[i].innerHTML;
+        autorModal.innerHTML = autorReceita[i].innerHTML;
+    });    
 }
