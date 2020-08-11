@@ -70,7 +70,7 @@ if (pagination) {
 
 
 
-/* Modal */
+/* Modal 
 const receita = document.querySelectorAll(".receita")
 const modal = document.querySelector("#modal")
 const close = document.querySelector("#modal .footer a")
@@ -101,3 +101,4 @@ for (let i = 0; i < receita.length; i++) {
         autorModal.innerHTML = autorReceita[i].innerHTML;
     });    
 }
+*/

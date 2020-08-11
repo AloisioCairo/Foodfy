@@ -7,16 +7,27 @@ module.exports = {
             return res.render(`courses.njk`, { recipes })
         })
     },
-    index(req, res){
+    lista(req, res){
         Recipes.all(function(recipes){
-            return res.render("recipes/index.njk", { recipes })
+            return res.render("courses/index.njk", { recipes })
         })        
     },
     create(req, res){        
     },
     post(req, res){        
     },
-    show(req, res){                
+    index(req, res){
+
+        return res.render("./admin/recipes/index.njk")
+    },
+    exibe(req, res){
+        Recipes.find(req.params.id, function(recipe) {
+            
+            if (!recipe)
+                return res.send('Receita não localizada.')                                    
+
+            return res.render("courses/show", { recipe })
+        }) 
     },
     edit(req, res){        
     },

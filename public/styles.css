@@ -189,10 +189,42 @@ header {
   color: red;
 }
 
+.imgReceitaDet {  
+  width: 100%;
+  height: 240px;
+  border-radius: 10px;  
+}
+
+.tituloReceitaDet {
+  margin-top: 30px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.autorReceitaDet {
+  margin-top: 5px;
+  font-size: 14px;
+  font-weight: normal;
+  color: darkgray;
+}
+
+.mostraEscondeReceita {
+  margin-top: 5px;
+  font-size: 14px;
+  font-weight: normal;
+  color: darkgray;
+}
+
+.headerAdmin {
+  width: 100%;
+  height: 50px;
+  background-color: yellow;
+}
 
 
 
 
+/* Modal */
 #modal {
   background-color: #0e0a14ef; /* O "ef" é que deixa o modal transparente*/ 
   height: 100vh;

@@ -1,0 +1,20 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+  <div class="container">
+    <div class="content">
+      <div class="centralizar">
+        <img class="imgReceitaDet" src="{{ recipe.image }}"/>
+        <div class="tituloReceitaDet">
+          {{ recipe.title }}
+        </div>
+        <div class="autorReceitaDet">
+          por {{ recipe.name }}
+        </div>
+      </div>
+      <h3>Ingredientes</h3><div class="mostraEscondeReceita">Mostrar</div>
+      <h3>Modo de preparo</h3><div class="mostraEscondeReceita">Esconder</div>
+      <h3>Informações adicionais</h3><div class="mostraEscondeReceita">Mostrar</div>
+    </div>
+  </div>
+{% endblock content %}
