@@ -1,12 +1,19 @@
 <html>
-  <head>            
+  <head>
       {% block head %}
           <title>Foodfy</title>
       {% endblock %}
-      
-      <link rel="stylesheet" href="/styles.css">        
-  </head>  
-  <div class="headerAdmin">
-    Texto
-  </div>  
+
+      <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div class="content headerAdmin">
+      <div class="container">
+        <a href="/"><img src="/assets/logo.svg" alt="Logo"/></a>
+      </div>
+    </div>
+
+    {% block content %}
+    {% endblock %}
+  </body>
 </html>

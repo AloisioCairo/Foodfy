@@ -1,4 +1,23 @@
 {% extends "../header.njk" %}
 
 {% block content %}
+  <div class="container">
+    
+    <h2 class="tituloAdmReceita">Gerenciar receitas</h2>
+    
+    <div class="listaReceitasAdm">
+      
+      {% for recipe in recipes %}
+          
+          <img class="imgReceitaAdm" src="{{ recipe.image }}" />
+
+          <div class="dadosReceitaAdm">
+            <div class="tituloReceitaAdm">{{ recipe.title }}</div>
+            <div class="autorReceitaAdm">por {{ recipe.name }}</div>
+            <div><a href="/admin/recipes/{{ recipe.id }}">Visualizar</a></div>
+          </div>
+
+        {% endfor %}
+    <div>
+  </div>
 {% endblock content %}

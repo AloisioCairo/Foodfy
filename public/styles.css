@@ -36,6 +36,10 @@ header {
   margin: 0 auto;
 }
 
+a {
+  text-decoration: none;
+}
+
 .links {
   font-size: 20px;
   text-align: right;
@@ -44,7 +48,6 @@ header {
 .links a {
   text-decoration: none;
   color: #777;
-
   position: relative; /* Necessário para o funcionamento da class ".links a::after" */
 }
 
@@ -198,7 +201,7 @@ header {
 .tituloReceitaDet {
   margin-top: 30px;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 20px;  
 }
 
 .autorReceitaDet {
@@ -217,9 +220,65 @@ header {
 
 .headerAdmin {
   width: 100%;
-  height: 50px;
+  height: 1px;
   background-color: yellow;
+  margin-bottom: 30px;  
+  padding-top: 15px;
+  padding-bottom: 40px;
 }
+
+.tituloAdmReceita {
+  margin-bottom: 30px;
+}
+
+.listaReceitasAdm {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 15px;
+}
+
+.imgReceitaAdm {
+  width: 100%;
+  height: 100px;
+  border-radius: 10px;  
+}
+
+.dadosReceitaAdm {
+  display: inline;
+}
+
+.tituloReceitaAdm {  
+  font-size: 18px; 
+  letter-spacing: 1px;
+}
+
+.autorReceitaAdm {  
+  font-size: 14px;
+  font-weight: normal;
+  color: darkgray;
+  margin-bottom: 6px;
+}
+
+.editarReceita {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 10px;
+}
+
+.botaoEditarReceita {
+  height: 30px;
+  width: 120px;
+  background-color: #6558C3;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+}
+
+
+
+
+
+
 
 
 

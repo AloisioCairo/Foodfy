@@ -1,0 +1,31 @@
+{% extends "../header.njk" %}
+
+{% block content %}
+  <div class="container">
+    <div class="content">
+      
+      <div class="editarReceita">
+        <div class="tituloReceitaDet">
+          Receita: {{ recipe.title }}
+        </div>
+
+        <div class="botaoEditarReceita">
+          Editar receita
+        </div>
+      </div>
+
+      <div class="centralizar">
+        <img class="imgReceitaDet" src="{{ recipe.image }}"/>
+        <div class="tituloReceitaDet">
+          {{ recipe.title }}
+        </div>
+        <div class="autorReceitaDet">
+          por {{ recipe.name }}
+        </div>
+      </div>
+      <h3>Ingredientes</h3>
+      <h3>Modo de preparo</h3>
+      <h3>Informações adicionais</h3>
+    </div>
+  </div>
+{% endblock content %}

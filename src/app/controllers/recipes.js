@@ -17,8 +17,18 @@ module.exports = {
     post(req, res){        
     },
     index(req, res){
+        Recipes.all(function(recipes){
+            return res.render("./admin/recipes/index.njk", { recipes })
+        })
+    },
+    show(req, res){
+        Recipes.find(req.params.id, function(recipe) {
+            
+            if (!recipe)
+                return res.send('Receita não localizada.')                                    
 
-        return res.render("./admin/recipes/index.njk")
+            return res.render("./admin/recipes/show.njk", { recipe })
+        }) 
     },
     exibe(req, res){
         Recipes.find(req.params.id, function(recipe) {
