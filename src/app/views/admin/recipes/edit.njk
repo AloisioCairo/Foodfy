@@ -1,0 +1,20 @@
+{% extends "../header.njk" %}
+
+{% block content %}
+  <div class="container">
+    <div class="content">
+      <h3>Editando receita</h3>
+
+      <div class="botaoDeletar">
+        Deletar
+      </div>
+
+      <div class="botaoSalvar">
+        Salvar receita
+      </div>
+
+      {% include './fields.njk' %}
+
+    </div>    
+  </div>
+{% endblock content %}

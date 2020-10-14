@@ -221,7 +221,7 @@ a {
 .headerAdmin {
   width: 100%;
   height: 1px;
-  background-color: yellow;
+  background-color: black;
   margin-bottom: 30px;  
   padding-top: 15px;
   padding-bottom: 40px;
@@ -260,18 +260,52 @@ a {
 }
 
 .editarReceita {
-  display: grid;
+  /*display: grid;
   grid-template-columns: 1fr 1fr;
   margin-bottom: 10px;
+  */
 }
 
 .botaoEditarReceita {
   height: 30px;
-  width: 120px;
+  width: 150px;
   background-color: #6558C3;
-  border-radius: 5px;
+  border-radius: 4px;
   color: white;
   text-align: center;
+  font-size: 16px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.botaoDeletar {
+  height: 30px;
+  width: 150px;
+  background-color: #DC4747;
+  border-radius: 4px;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.botaoSalvar {
+  height: 30px;
+  width: 150px;
+  background-color: #6558C3;
+  border-radius: 4px;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 
@@ -397,3 +431,24 @@ a {
   border-bottom: 1px solid var(--primary-color);
 }
 
+input {
+  width: 100%;
+  height: 30px;
+  border: 1px solid #DDDDDD;
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+textarea {
+  width: 100%;
+  border: 1px solid #DDDDDD;
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+.tituloEdicao {
+  font-weight: bold;
+  margin-top: 8px;
+  font-size: 14px;
+  margin-top: 25px;
+}

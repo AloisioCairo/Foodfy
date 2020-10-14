@@ -40,6 +40,13 @@ module.exports = {
         }) 
     },
     edit(req, res){        
+        Recipes.find(req.params.id, function(recipe) {
+            
+            if (!recipe)
+                return res.send('Receita não localizada.')                                    
+
+            return res.render("./admin/recipes/edit.njk", { recipe })
+        }) 
     },
     put(req, res){        
     },

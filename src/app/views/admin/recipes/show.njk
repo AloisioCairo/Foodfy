@@ -24,6 +24,11 @@
         </div>
       </div>
       <h3>Ingredientes</h3>
+       
+        {% for ingredient in recipe.ingredients %}
+          <h4>por {{ recipe.ingredients[ingredient] }}</h4>          
+        {% endfor %}
+
       <h3>Modo de preparo</h3>
       <h3>Informações adicionais</h3>
     </div>

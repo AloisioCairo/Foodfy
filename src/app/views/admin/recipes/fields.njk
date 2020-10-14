@@ -1,0 +1,33 @@
+<div class="tituloEdicao">Imagem da receita</div>
+<div>
+    <input 
+        type="url" 
+        name="image"
+        placeholder="http://"
+        value="{{ recipes.image }}"
+    >    
+</div>
+
+<div class="tituloEdicao">Ingredientes</div>
+<input 
+    type="text" 
+    name="ingredients"    
+    value="{{ recipes.ingredients }}"
+>
+<a href="#"><h5>Adicionar novo ingrediente</h5></a>
+
+<div class="tituloEdicao">Modo de preparo</div>
+<input
+    type="text" 
+    name="preparations"    
+    value="{{ recipes.preparations }}"
+>
+<a href="#"><h5>Adicionar novo passo</h5></a>
+
+<div class="tituloEdicao">Informações adicionais</div>
+<textarea
+    name="information"
+    rows="10"
+    cols="100"
+    value="{{ recipes.information }}">
+</textarea>
