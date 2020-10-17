@@ -35,7 +35,7 @@ module.exports = {
         db.query(`SELECT recipes.*, chefs.name FROM recipes
         INNER JOIN chefs ON (chefs.id = recipes.chef_id)
         WHERE recipes.id = $1`, [id], function(err, results) {
-
+            
             if (err)
                 throw `Erro no banco de dados: Pesquisar pela receita. ${err}`
 

@@ -4,30 +4,36 @@
         type="url" 
         name="image"
         placeholder="http://"
-        value="{{ recipes.image }}"
+        value="{{ recipe.image }}"
     >    
 </div>
 
 <div class="tituloEdicao">Ingredientes</div>
-<input 
-    type="text" 
-    name="ingredients"    
-    value="{{ recipes.ingredients }}"
->
-<a href="#"><h5>Adicionar novo ingrediente</h5></a>
+{% for ingredient in recipe.ingredients %}
+    <input
+        type="text"
+        name="ingredients"
+        value="{{ ingredient }}"
+    >
+{% endfor %}
+
+<div class="acao"><a href="#">Adicionar novo ingrediente</a></div>
 
 <div class="tituloEdicao">Modo de preparo</div>
+{% for preparation in recipe.preparation %}
 <input
     type="text" 
-    name="preparations"    
-    value="{{ recipes.preparations }}"
+    name="preparation"
+    value="{{ preparation }}"
 >
-<a href="#"><h5>Adicionar novo passo</h5></a>
+{% endfor %}
+
+<div class="acao"><a href="#">Adicionar novo passo</a></div>
 
 <div class="tituloEdicao">Informações adicionais</div>
-<textarea
-    name="information"
-    rows="10"
-    cols="100"
-    value="{{ recipes.information }}">
+<textarea 
+    name="information" 
+    rows="10" 
+    cols="100">
+    {{ recipe.information }}
 </textarea>

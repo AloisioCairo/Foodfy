@@ -1,0 +1,49 @@
+{% extends "../header.njk" %}
+
+{% block content %}
+  <div class="container">
+    <div class="content">
+      <div class="criarReceita">
+        <h3>Criando receita</h3>      
+
+        <div class="botaoSalvar">
+          Salvar receita
+        </div>
+      </div>
+
+      <!-- {% include './fields.njk' %} -->
+      <div class="tituloEdicao">Imagem da receita</div>
+      <div>
+          <input 
+              type="url" 
+              name="image"
+              placeholder="http://"
+          >    
+      </div>
+
+      <div class="tituloEdicao">Ingredientes</div>
+        <input
+            type="text"
+            name="ingredients"
+        >
+
+      <div class="acao"><a href="#">Adicionar novo ingrediente</a></div>
+
+      <div class="tituloEdicao">Modo de preparo</div>
+      <input
+          type="text" 
+          name="preparation"
+      >
+
+      <div class="acao"><a href="#">Adicionar novo passo</a></div>
+
+      <div class="tituloEdicao">Informações adicionais</div>
+      <textarea 
+          name="information" 
+          rows="10" 
+          cols="100">
+      </textarea>
+
+    </div>    
+  </div>
+{% endblock content %}

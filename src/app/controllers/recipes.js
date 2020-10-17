@@ -13,6 +13,7 @@ module.exports = {
         })        
     },
     create(req, res){        
+       return res.render("./admin/recipes/create.njk")
     },
     post(req, res){        
     },

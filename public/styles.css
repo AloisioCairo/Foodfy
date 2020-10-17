@@ -201,7 +201,7 @@ a {
 .tituloReceitaDet {
   margin-top: 30px;
   font-weight: bold;
-  font-size: 20px;  
+  font-size: 24px;
 }
 
 .autorReceitaDet {
@@ -259,35 +259,50 @@ a {
   margin-bottom: 6px;
 }
 
-.editarReceita {
-  /*display: grid;
-  grid-template-columns: 1fr 1fr;
+.showReceita {
+  display: grid;
+  grid-template-columns: 6fr 1fr;
   margin-bottom: 10px;
-  */
+}
+
+.editarReceita {
+  display: grid;
+  grid-template-columns: 4fr 1fr 1fr;
+  margin-bottom: 10px;
 }
 
 .botaoEditarReceita {
   height: 30px;
-  width: 150px;
+  width: 120px;
   background-color: #6558C3;
   border-radius: 4px;
   color: white;
   text-align: center;
-  font-size: 16px;
+  font-size: 14px;
 
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.botaoEditarReceita a {
+  color: white;
+}
+
+.criarReceita {
+  display: grid;
+  grid-template-columns: 6fr 1fr;
+  margin-bottom: 10px;
+}
+
 .botaoDeletar {
   height: 30px;
-  width: 150px;
+  width: 120px;
   background-color: #DC4747;
   border-radius: 4px;
   color: white;
   text-align: center;
-  font-size: 16px;
+  font-size: 14px;
 
   display: flex;
   justify-content: center;
@@ -296,12 +311,12 @@ a {
 
 .botaoSalvar {
   height: 30px;
-  width: 150px;
+  width: 120px;
   background-color: #6558C3;
   border-radius: 4px;
   color: white;
   text-align: center;
-  font-size: 16px;
+  font-size: 14px;
 
   display: flex;
   justify-content: center;
@@ -437,6 +452,7 @@ input {
   border: 1px solid #DDDDDD;
   border-radius: 4px;
   margin-top: 8px;
+  padding: 10px;
 }
 
 textarea {
@@ -444,6 +460,7 @@ textarea {
   border: 1px solid #DDDDDD;
   border-radius: 4px;
   margin-top: 8px;
+  padding: 10px;
 }
 
 .tituloEdicao {
@@ -451,4 +468,27 @@ textarea {
   margin-top: 8px;
   font-size: 14px;
   margin-top: 25px;
+}
+
+.recipe li {
+  list-style-type: none;
+  font-size: 15px;
+  color: #444444;
+  line-height: 28px;
+}
+
+.recipe h3 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.recipe .informacao {
+  color: #444444;
+  font-size: 15px;
+}
+
+.acao {
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 12px;
 }

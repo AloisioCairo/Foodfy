@@ -1,36 +1,45 @@
 {% extends "../header.njk" %}
 
 {% block content %}
-  <div class="container">
-    <div class="content">
-      
-      <div class="editarReceita">
-        <div class="tituloReceitaDet">
-          Receita: {{ recipe.title }}
+  <div class="recipe">
+    <div class="container">
+      <div class="content">
+        
+        <div class="showReceita">
+          
+          <div class="tituloReceitaDet">
+            Receita: {{ recipe.title }}
+          </div>
+          
+          <div class="botaoEditarReceita">
+            <a href="/admin/recipes/{{ recipe.id }}/edit">Editar receita</a>
+          </div>
         </div>
 
-        <div class="botaoEditarReceita">
-          Editar receita
+        <div class="centralizar">
+          <img class="imgReceitaDet" src="{{ recipe.image }}"/>
+          <div class="tituloReceitaDet">
+            {{ recipe.title }}
+          </div>
+          <div class="autorReceitaDet">
+            por {{ recipe.name }}
+          </div>
         </div>
+        <h3>Ingredientes</h3>
+        
+          {% for ingredient in recipe.ingredients %}
+            <li>- {{ ingredient }}</li>
+          {% endfor %}
+
+        <h3>Modo de preparo</h3>
+          
+          {% for preparation in recipe.preparation %}
+            <li>- {{ preparation }}</li>
+          {% endfor %}
+
+        <h3>Informações adicionais</h3>
+          <span class="informacao">{{ recipe.information }}</span>
       </div>
-
-      <div class="centralizar">
-        <img class="imgReceitaDet" src="{{ recipe.image }}"/>
-        <div class="tituloReceitaDet">
-          {{ recipe.title }}
-        </div>
-        <div class="autorReceitaDet">
-          por {{ recipe.name }}
-        </div>
-      </div>
-      <h3>Ingredientes</h3>
-       
-        {% for ingredient in recipe.ingredients %}
-          <h4>por {{ recipe.ingredients[ingredient] }}</h4>          
-        {% endfor %}
-
-      <h3>Modo de preparo</h3>
-      <h3>Informações adicionais</h3>
     </div>
   </div>
 {% endblock content %}
