@@ -15,7 +15,18 @@ module.exports = {
     create(req, res){        
        return res.render("./admin/recipes/create.njk")
     },
-    post(req, res){        
+    post(req, res){
+        const keys = Object.keys(req.body)
+
+        for (key of keys){
+            if (req.body[key] == "") {
+                return res.send('Por favor. Preencha todos os campos.')
+            }
+        }
+
+        Recipes.create(req.body, function(recipes){
+            return res.redirect(`./recipes/${recipes.id}`)
+        })
     },
     index(req, res){
         Recipes.all(function(recipes){

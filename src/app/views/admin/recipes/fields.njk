@@ -9,24 +9,40 @@
 </div>
 
 <div class="tituloEdicao">Ingredientes</div>
-{% for ingredient in recipe.ingredients %}
+{% if recipe.ingredients %}
+    {% for ingredient in recipe.ingredients %}
+        <input
+            type="text"
+            name="ingredients"
+            value="{{ ingredient }}"
+        >
+    {% endfor %}
+{% else %}
     <input
         type="text"
-        name="ingredients"
-        value="{{ ingredient }}"
+        name="ingredients[]"
+        required="required"
     >
-{% endfor %}
+{% endif %}
 
 <div class="acao"><a href="#">Adicionar novo ingrediente</a></div>
 
 <div class="tituloEdicao">Modo de preparo</div>
-{% for preparation in recipe.preparation %}
-<input
-    type="text" 
-    name="preparation"
-    value="{{ preparation }}"
->
-{% endfor %}
+{% if recipe.preparation %}
+    {% for preparation in recipe.preparation %}
+    <input
+        type="text" 
+        name="preparation"
+        value="{{ preparation }}"
+    >
+    {% endfor %}
+{% else %}
+    <input
+        type="text" 
+        name="preparation[]"
+        required="required"
+    >
+{% endif %}
 
 <div class="acao"><a href="#">Adicionar novo passo</a></div>
 
