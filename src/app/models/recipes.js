@@ -59,8 +59,28 @@ module.exports = {
     findBy (filter, callback) {                       
     },
     update (data, callback){
+
+        const query = `UPDATE recipes SET chef_id = $1, image = $2, ingredients = $3, preparation = $4, 
+                        information = $5 WHERE id = $6`
+
+        const values = [
+            data.chef_id, data.image, data.ingredients, data.preparation, data.information, data.id
+        ]
+
+        db.query(query, values, function(err, results){
+            if (err)
+            throw `Erro no banco de dados. ${err}`
+
+            callback()
+        })
     },
-    delete(id, callback) {        
+    delete(id, callback) {
+        db.query(`DELETE FROM recipes WHERE id = $1`, [id], function(err, results){
+            if (err)
+                throw `Erro ao tentar deletar a receita. ${err}`
+
+            return callback()        
+        })
     },
     paginate(params){        
     }

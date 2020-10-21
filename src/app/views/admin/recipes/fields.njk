@@ -9,42 +9,58 @@
 </div>
 
 <div class="tituloEdicao">Ingredientes</div>
-{% if recipe.ingredients %}
+{% if recipe.ingredients %}    
     {% for ingredient in recipe.ingredients %}
-        <input
-            type="text"
-            name="ingredients"
-            value="{{ ingredient }}"
-        >
+        <div id="ingredients">
+            <div class="ingredient">
+                <input
+                    type="text"
+                    name="ingredients"
+                    value="{{ ingredient }}"
+                >
+            </div>
+        </div>
     {% endfor %}
 {% else %}
-    <input
-        type="text"
-        name="ingredients[]"
-        required="required"
-    >
+    <div id="ingredients">
+        <div class="ingredient">
+            <input
+                type="text"
+                name="ingredients[]"
+                required="required"
+            >
+        </div>
+    </div>
 {% endif %}
 
-<div class="acao"><a href="#">Adicionar novo ingrediente</a></div>
+<div class="acao add-ingrediente"><a href="#">Adicionar novo ingrediente</a></div>
 
 <div class="tituloEdicao">Modo de preparo</div>
 {% if recipe.preparation %}
     {% for preparation in recipe.preparation %}
-    <input
-        type="text" 
-        name="preparation"
-        value="{{ preparation }}"
-    >
+        <div id="modosPreparo">
+            <div class="modoPreparo">
+                <input
+                    type="text" 
+                    name="preparation"
+                    value="{{ preparation }}"
+                >
+            </div>
+        </div>
     {% endfor %}
 {% else %}
-    <input
-        type="text" 
-        name="preparation[]"
-        required="required"
-    >
+    <div id="modosPreparo">
+        <div class="modoPreparo">
+            <input
+                type="text" 
+                name="preparation[]"
+                required="required"
+            >
+        </div>
+    </div>
 {% endif %}
 
-<div class="acao"><a href="#">Adicionar novo passo</a></div>
+<div class="acao add-modo-preparo"><a href="#">Adicionar novo passo</a></div>
 
 <div class="tituloEdicao">Informações adicionais</div>
 <textarea 

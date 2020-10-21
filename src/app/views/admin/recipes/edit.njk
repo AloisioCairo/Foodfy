@@ -1,22 +1,34 @@
 {% extends "../header.njk" %}
 
-{% block content %}
+{% block content %}  
   <div class="container">
     <div class="content">
       <div class="editarReceita">
-        <h3>Editando receita</h3>
+        <form class="" method="POST" action="/admin/recipes?_method=PUT">
 
-        <div class="botaoDeletar">
-          Deletar
-        </div>
+          <h3>Editando receita</h3>
 
-        <div class="botaoSalvar">
-          Salvar receita
-        </div>
-      </div>      
+          <button class="botaoSalvar" type="submit">Salvar receita</button>
 
-      {% include './fields.njk' %}
+          <input type="hidden" name="id" value="{{ recipe.id }}">
 
-    </div>    
+          {% include './fields.njk' %}
+
+          
+          <!--
+          <div class="botaoSalvar">
+            Salvar receita
+          </div>
+          -->
+          
+        </form>
+
+        <form id="form-delete" method="POST" action="/admin/recipes?_method=DELETE">
+            <input type="hidden" name="id" value="{{ recipe.id }}">
+            <button class="botaoDeletar" type="submit">Deletar</button>
+        </form>
+
+      </div>
+    </div>  
   </div>
 {% endblock content %}

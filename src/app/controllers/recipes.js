@@ -60,8 +60,22 @@ module.exports = {
             return res.render("./admin/recipes/edit.njk", { recipe })
         }) 
     },
-    put(req, res){        
+    put(req, res){
+        const keys = Object.keys(req.body)
+
+        for (key of keys){
+            if (req.body[key] == "") {
+                return res.send('Por favor. Preencha todos os campos.')
+            }
+        }
+
+        Recipes.update(req.body, function(){
+            return res.redirect(`./recipes/${req.body.id}`)
+        })
     },
     delete(req, res){
+        Recipes.delete(req.body.id, function(){
+            return res.redirect(`./recipes/`)
+        })
     }
 }

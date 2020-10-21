@@ -64,6 +64,46 @@ if (pagination) {
     createPagination(pagination)
 }
 
+// Função para adicionar um novo componente input para os ingredientes
+function addIngredient() {
+    const ingredients = document.querySelector("#ingredients");
+    const fieldContainer = document.querySelectorAll(".ingredient");
+  
+    // Realiza um clone do último ingrediente adicionado
+    const newField = fieldContainer[fieldContainer.length - 1].cloneNode(true);
+  
+    // Não adiciona um novo input se o último tem um valor vazio
+    if (newField.children[0].value == "") return false;
+  
+    // Deixa o valor do input vazio
+    newField.children[0].value = "";
+    ingredients.appendChild(newField);
+}
+  
+document
+    .querySelector(".add-ingrediente")
+    .addEventListener("click", addIngredient);
+
+
+// Função para adicionar um novo componente input para os modos de preparo
+function addModoPreparo() {
+    const modosPreparo = document.querySelector("#modosPreparo");
+    const fieldContainer = document.querySelectorAll(".modoPreparo");
+    
+    // Realiza um clone do último modo de prepato adicionado
+    const newField = fieldContainer[fieldContainer.length - 1].cloneNode(true);
+    
+    // Não adiciona um novo input se o último tem um valor vazio
+    if (newField.children[0].value == "") return false;
+    
+    // Deixa o valor do input vazio
+    newField.children[0].value = "";
+    modosPreparo.appendChild(newField);
+}
+        
+document
+    .querySelector(".add-modo-preparo")
+    .addEventListener("click", addModoPreparo);
 
 
 
