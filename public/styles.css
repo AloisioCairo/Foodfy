@@ -227,7 +227,7 @@ a {
   padding-bottom: 40px;
 }
 
-.tituloAdmReceita {
+.tituloAdm {
   margin-bottom: 30px;
 }
 
@@ -237,19 +237,45 @@ a {
   gap: 15px;
 }
 
+.listaChefeAdm {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 15px;
+}
+
 .imgReceitaAdm {
   width: 100%;
   height: 100px;
   border-radius: 10px;  
 }
 
-.dadosReceitaAdm {
+.avatarChefe {
+  width: 70%;
+  height: 70px;
+  border-radius: 100px;
+}
+
+.dadosInline {
   display: inline;
 }
 
 .tituloReceitaAdm {  
   font-size: 18px; 
   letter-spacing: 1px;
+}
+
+.nomeChefeAdm {  
+  font-size: 12px; 
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+.detalheChefe {
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-top: 5px;
+  font-weight: bold;
+  color: #6558C3;
 }
 
 .autorReceitaAdm {  
@@ -491,4 +517,51 @@ textarea {
   margin-top: 20px;
   font-weight: bold;
   font-size: 12px;
+}
+
+.mostrarEsconder {
+  font-family: Roboto-Bold;
+  font-size: 12px;
+  color: #999999;
+}
+
+
+
+.linksAdm {
+  font-size: 18px;
+  text-align: right;
+}
+
+.linksAdm a {
+  text-decoration: none;
+  color: white;
+  position: relative; /* Necessário para o funcionamento da class ".links a::after" */
+}
+
+.linksAdm a + a {
+  margin-left: 60px;
+}
+
+.linksAdm a.active {
+  font-weight: bold;
+  color: var(--secondary-color);
+}
+
+.linksAdm a:hover {
+  color: var(--secondary-color);
+}
+
+.linksAdm a::after {
+  content: "";
+  width: 0;
+  height: 2px;
+  background-color: var(--secondary-color);
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+}
+
+.linksAdm a:hover::after {
+  width: 100%;
+  transition: width 200ms ease-in-out;
 }

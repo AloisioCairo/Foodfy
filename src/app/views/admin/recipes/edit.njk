@@ -3,32 +3,22 @@
 {% block content %}  
   <div class="container">
     <div class="content">
+
       <div class="editarReceita">
-        <form class="" method="POST" action="/admin/recipes?_method=PUT">
-
-          <h3>Editando receita</h3>
-
-          <button class="botaoSalvar" type="submit">Salvar receita</button>
-
-          <input type="hidden" name="id" value="{{ recipe.id }}">
-
-          {% include './fields.njk' %}
-
-          
-          <!--
-          <div class="botaoSalvar">
-            Salvar receita
-          </div>
-          -->
-          
-        </form>
-
-        <form id="form-delete" method="POST" action="/admin/recipes?_method=DELETE">
-            <input type="hidden" name="id" value="{{ recipe.id }}">
-            <button class="botaoDeletar" type="submit">Deletar</button>
-        </form>
-
+        <h3>Editando receita</h3>
+        <button form='form-delete' class="botaoDeletar" type="submit">Deletar</button>
+        <button form='form-put' class="botaoSalvar" type="submit">Salvar receita</button>
       </div>
+      
+      <form id="form-delete" method="POST" action="/admin/recipes?_method=DELETE">
+          <input type="hidden" name="id" value="{{ recipe.id }}">
+      </form>
+
+      <form id="form-put" class="" method="POST" action="/admin/recipes?_method=PUT">
+        <input type="hidden" name="id" value="{{ recipe.id }}">
+        {% include './fields.njk' %}
+      </form>
+
     </div>  
   </div>
 {% endblock content %}

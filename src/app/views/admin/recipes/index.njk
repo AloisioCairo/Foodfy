@@ -3,7 +3,7 @@
 {% block content %}
   <div class="container">
     
-    <h2 class="tituloAdmReceita">Gerenciar receitas</h2>
+    <h2 class="tituloAdm">Gerenciar receitas</h2>
     
     <div class="listaReceitasAdm">
       
@@ -11,7 +11,7 @@
           
           <img class="imgReceitaAdm" src="{{ recipe.image }}" />
 
-          <div class="dadosReceitaAdm">
+          <div class="dadosInline">
             <div class="tituloReceitaAdm">{{ recipe.title }}</div>
             <div class="autorReceitaAdm">por {{ recipe.name }}</div>
             <div><a href="/admin/recipes/{{ recipe.id }}">Visualizar</a></div>

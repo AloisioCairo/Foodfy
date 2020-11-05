@@ -1,6 +1,7 @@
 const express = require('express')
 const routes = express.Router()
 const recipes =  require('./app/controllers/recipes')
+const chefs =  require('./app/controllers/chefs')
 
 routes.get("/", function(req, res){
     return res.redirect("/courses")
@@ -27,5 +28,13 @@ routes.post("/admin/recipes", recipes.post); // Cadastrar nova receita
 routes.get("/admin/recipes/:id/edit", recipes.edit); // Mostrar formulário de edição de receita
 routes.put("/admin/recipes", recipes.put); // Editar uma receita
 routes.delete("/admin/recipes", recipes.delete); // Deletar uma receita
+
+routes.get("/admin/chefs", chefs.index); // Mostrar a lista de chefes
+routes.get("/admin/chefs/create", chefs.create); // Mostrar formulário de nova chefe
+routes.get("/admin/chefs/:id", chefs.show); // Exibir detalhes de uma chefe
+routes.post("/admin/chefs", chefs.post); // Cadastrar nova chefe
+routes.get("/admin/chefs/:id/edit", chefs.edit); // Mostrar formulário de edição de chefe
+routes.put("/admin/chefs", chefs.put); // Editar uma chefe
+routes.delete("/admin/chefs", chefs.delete); // Deletar uma chefe
 
 module.exports = routes

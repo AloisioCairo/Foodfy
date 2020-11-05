@@ -7,9 +7,12 @@
         
         <div class="showReceita">
           
+          <!--
           <div class="tituloReceitaDet">
             Receita: {{ recipe.title }}
           </div>
+          -->
+          <h2>Receita: {{ recipe.title }}</h2>
           
           <div class="botaoEditarReceita">
             <a href="/admin/recipes/{{ recipe.id }}/edit">Editar receita</a>
@@ -25,11 +28,17 @@
             por {{ recipe.name }}
           </div>
         </div>
-        <h3>Ingredientes</h3>
         
-          {% for ingredient in recipe.ingredients %}
-            <li>- {{ ingredient }}</li>
-          {% endfor %}
+        <div class="ingredienteReceita">
+          <h3>Ingredientes</h3>
+          <span class="mostrarEsconder"><a href="#">Mostrar</a></span>
+
+          <div class="itemIngredienteReceita">
+            {% for ingredient in recipe.ingredients %}
+              <li>- {{ ingredient }}</li>
+            {% endfor %}
+          </div>
+        </div>
 
         <h3>Modo de preparo</h3>
           
