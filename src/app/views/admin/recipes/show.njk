@@ -5,26 +5,20 @@
     <div class="container">
       <div class="content">
         
-        <div class="showReceita">
-          
-          <!--
-          <div class="tituloReceitaDet">
-            Receita: {{ recipe.title }}
-          </div>
-          -->
+        <div class="show">
           <h2>Receita: {{ recipe.title }}</h2>
           
-          <div class="botaoEditarReceita">
+          <div class="botaoEditar">
             <a href="/admin/recipes/{{ recipe.id }}/edit">Editar receita</a>
           </div>
         </div>
 
         <div class="centralizar">
           <img class="imgReceitaDet" src="{{ recipe.image }}"/>
-          <div class="tituloReceitaDet">
+          <div class="tituloAdmin">
             {{ recipe.title }}
           </div>
-          <div class="autorReceitaDet">
+          <div class="autorDetalhe">
             por {{ recipe.name }}
           </div>
         </div>

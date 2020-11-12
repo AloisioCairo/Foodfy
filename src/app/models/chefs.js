@@ -6,7 +6,7 @@ const db = require('../../config/db')
 module.exports = {
     all(callback) {
         db.query(` 
-          SELECT name, avatar_url FROM chefs
+          SELECT id, name, avatar_url FROM chefs
           ORDER BY name ASC `, function(err, results){
         
             if (err)
@@ -32,12 +32,13 @@ module.exports = {
         })
     },
     find (id, callback) {
-        db.query(`SELECT recipes.*, chefs.name FROM recipes
-        LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
-        WHERE recipes.id = $1`, [id], function(err, results) {
+        db.query(`SELECT name, avatar_url, COUNT(recipes.id) AS qtde_receitas FROM chefs
+            LEFT JOIN recipes on (recipes.chef_id = chefs.id)  
+            WHERE chefs.id = $1
+            GROUP BY name, avatar_url`, [id], function(err, results) {
             
             if (err)
-                throw `Erro no banco de dados: Pesquisar pela receita. ${err}`
+                throw `Erro no banco de dados: Pesquisar pelo chefe. ${err}`
 
             callback(results.rows[0])
         })

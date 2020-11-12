@@ -198,13 +198,13 @@ a {
   border-radius: 10px;  
 }
 
-.tituloReceitaDet {
+.tituloAdmin {
   margin-top: 30px;
   font-weight: bold;
   font-size: 24px;
 }
 
-.autorReceitaDet {
+.autorDetalhe {
   margin-top: 5px;
   font-size: 14px;
   font-weight: normal;
@@ -255,6 +255,12 @@ a {
   border-radius: 100px;
 }
 
+.avatarDetalheChefe {
+  width: 25%;
+  height: 200px;
+  border-radius: 100px;
+}
+
 .dadosInline {
   display: inline;
 }
@@ -285,7 +291,7 @@ a {
   margin-bottom: 6px;
 }
 
-.showReceita {
+.show {
   display: grid;
   grid-template-columns: 6fr 1fr;
   margin-bottom: 10px;
@@ -297,7 +303,7 @@ a {
   margin-bottom: 10px;
 }
 
-.botaoEditarReceita {
+.botaoEditar {
   height: 30px;
   width: 120px;
   background-color: #6558C3;
@@ -309,6 +315,10 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.botaoEditar a {
+  color: white;
 }
 
 .botaoEditarReceita a {
