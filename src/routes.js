@@ -7,6 +7,7 @@ routes.get("/", function(req, res){
     return res.redirect("/courses")
 })
 routes.get("/courses", recipes.maisAcessadas)
+routes.get("/chefes", chefs.listaChefes)
 
 routes.get("/recipes", function(req, res){        
     return res.redirect("/courses/list")

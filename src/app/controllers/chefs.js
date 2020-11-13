@@ -7,6 +7,11 @@ module.exports = {
             return res.render("courses/index.njk", { chefs })
         })        
     },
+    listaChefes(req, res){
+        Chefs.listAll(function(chefs){
+            return res.render("chefs.njk", { chefs })
+        })        
+    },
     create(req, res){
        return res.render("./admin/chefs/create.njk")
     },
