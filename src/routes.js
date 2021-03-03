@@ -1,25 +1,35 @@
 const express = require('express')
 const routes = express.Router()
-const recipes =  require('./app/controllers/recipes')
-const chefs =  require('./app/controllers/chefs')
+const recipes = require('./app/controllers/recipes')
+const chefs = require('./app/controllers/chefs')
 
-routes.get("/", function(req, res){
+routes.get("/", function (req, res) {
     return res.redirect("/courses")
 })
 routes.get("/courses", recipes.maisAcessadas)
 routes.get("/chefes", chefs.listaChefes)
 
-routes.get("/recipes", function(req, res){        
+routes.get("/recipes", function (req, res) {
+
+    //console.log(req.query)
+
     return res.redirect("/courses/list")
-    
-    /*return res.render("recipes/index.njk")*/
+
+    //return res.render("recipes/index.njk")
 })
 
-routes.get("/about", function(req, res){        
+routes.get("/recipes_busca", recipes.findByReceitas)
+
+routes.get("/about", function (req, res) {
     return res.render("about/index.njk")
 })
 
-routes.get("/courses/list", recipes.lista);
+routes.get("/admin/caduso", function (req, res) {
+    return res.render("./admin/cad_uso.njk")
+})
+
+//routes.get("/courses/list", recipes.lista);
+routes.get("/courses/list", recipes.findByReceitas);
 routes.get('/courses/:id', recipes.exibe);
 
 routes.get("/admin/recipes", recipes.index); // Mostrar a lista de receitas

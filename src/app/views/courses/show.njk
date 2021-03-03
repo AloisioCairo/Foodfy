@@ -3,18 +3,55 @@
 {% block content %}
   <div class="container">
     <div class="content">
+      
       <div class="centralizar">
         <img class="imgReceitaDet" src="{{ recipe.image }}"/>
-        <div class="tituloReceitaDet">
+        
+        <div class="tituloAdmin">
           {{ recipe.title }}
         </div>
-        <div class="autorReceitaDet">
+        
+        <div class="autorDetalhe">
           por {{ recipe.name }}
         </div>
+      
+      </div>      
+
+      
+      <div class="ingrediente">
+        <h3 class="mt-20px">Ingredientes
+          <button class="buttonIngrediente">ESCONDER</button>
+        </h3>
+
+        <div class="itemIngredienteReceita">
+          {% for ingredient in recipe.ingredients %}
+            <li>- {{ ingredient }}</li>
+          {% endfor %}
+        </div>    
       </div>
-      <h3>Ingredientes</h3><div class="mostraEscondeReceita">Mostrar</div>
-      <h3>Modo de preparo</h3><div class="mostraEscondeReceita">Esconder</div>
-      <h3>Informações adicionais</h3><div class="mostraEscondeReceita">Mostrar</div>
+
+      <div class="modoPreparo">
+        <h3 class="mt-20px">Modo de preparo
+          <button class="buttonModoPreparo">ESCONDER</button>
+        </h3>
+              
+        <div class="itemModoPreparoReceita">
+          {% for preparation in recipe.preparation %}
+                <li>- {{ preparation }}</li>
+          {% endfor %}
+        </div>  
+      </div>
+
+      <div class="InformacaoAdicional">
+        <h3 class="mt-20px">Informações adicionais
+          <button class="buttonInfoAdicional">ESCONDER</button>
+        </h3>
+
+        <div class="dados">
+          {{ recipe.information }}
+        </div>
+      </div>
+
     </div>
   </div>
 {% endblock content %}

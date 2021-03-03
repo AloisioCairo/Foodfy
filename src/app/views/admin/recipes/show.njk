@@ -5,7 +5,7 @@
     <div class="container">
       <div class="content">
         
-        <div class="show">
+        <div class="showDados">
           <h2>Receita: {{ recipe.title }}</h2>
           
           <div class="botaoEditar">
@@ -15,17 +15,20 @@
 
         <div class="centralizar">
           <img class="imgReceitaDet" src="{{ recipe.image }}"/>
+          
           <div class="tituloAdmin">
             {{ recipe.title }}
           </div>
+          
           <div class="autorDetalhe">
             por {{ recipe.name }}
           </div>
         </div>
         
-        <div class="ingredienteReceita">
-          <h3>Ingredientes</h3>
-          <span class="mostrarEsconder"><a href="#">Mostrar</a></span>
+        <div class="ingredients-section">
+          <div class="ingredienteReceita">
+            <h3>Ingredientes</h3>
+          </div>
 
           <div class="itemIngredienteReceita">
             {% for ingredient in recipe.ingredients %}
@@ -35,13 +38,13 @@
         </div>
 
         <h3>Modo de preparo</h3>
-          
+
           {% for preparation in recipe.preparation %}
             <li>- {{ preparation }}</li>
           {% endfor %}
 
         <h3>Informações adicionais</h3>
-          <span class="informacao">{{ recipe.information }}</span>
+          <div class="informacao">{{ recipe.information }}</div>
       </div>
     </div>
   </div>

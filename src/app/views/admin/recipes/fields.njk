@@ -1,3 +1,12 @@
+<div class="tituloEdicao">Nome</div>
+<div>
+    <input 
+        type="text" 
+        name="title"
+        value="{{ recipe.title }}"
+    >    
+</div>
+
 <div class="tituloEdicao">Imagem da receita</div>
 <div>
     <input 
@@ -6,6 +15,17 @@
         placeholder="http://"
         value="{{ recipe.image }}"
     >    
+</div>
+
+<div class="tituloEdicao">Chefe</div>
+<div>
+    <select name="chef">
+        {% for chef in chefOptions %}
+            <option value="{{chef.id}}" {% if recipe.chef_id == chef.id %}selected{% endif %}>
+                {{chef.name}}
+            </option>
+        {% endfor %}
+    </select>
 </div>
 
 <div class="tituloEdicao">Ingredientes</div>

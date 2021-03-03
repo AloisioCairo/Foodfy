@@ -2,22 +2,47 @@
 
 {% block content %}
   <div class="container">
-    
-    <h2 class="tituloAdm">Gerenciar receitas</h2>
-    
-    <div class="listaReceitasAdm">
+
+    <div class="painel">
+      <div class="tituloAdm">
+        <h2>Gerenciar receitas</h2>
+
+        <div>
+            <form action="#" method="GET">
+                <input 
+                    type="text" 
+                    name="filter"
+                    placeholder="Filtrar pelo nome da receita ou chefe"
+                    value="{{filter}}"
+                >
+                <button type="submit">Buscar</button>
+            </form>
+        </div>
+      </div>
       
-      {% for recipe in recipes %}
-          
-          <img class="imgReceitaAdm" src="{{ recipe.image }}" />
+      <div class="listaReceitasAdm">
+        
+        {% for recipe in recipes %}
+            
+            <img class="imgReceitaAdm" src="{{ recipe.image }}" />
 
-          <div class="dadosInline">
-            <div class="tituloReceitaAdm">{{ recipe.title }}</div>
-            <div class="autorReceitaAdm">por {{ recipe.name }}</div>
-            <div><a href="/admin/recipes/{{ recipe.id }}">Visualizar</a></div>
-          </div>
+            <div class="dadosInline">
+              <div class="tituloReceitaAdm">{{ recipe.title }}</div>
+              <div class="autorReceitaAdm">por {{ recipe.name }}</div>
+              <div><a href="/admin/recipes/{{ recipe.id }}">Visualizar</a></div>
+            </div>
 
-        {% endfor %}
-    <div>
+          {% endfor %}
+      <div>
+
+      
+
+    </div>    
   </div>
+  <div class="pagination"
+          data-page={{pagination.page}}
+          data-total={{pagination.total}}
+          data-filter={{filter}}
+          >
+      </div>
 {% endblock content %}

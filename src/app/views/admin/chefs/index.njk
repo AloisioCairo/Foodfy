@@ -3,7 +3,21 @@
 {% block content %}
   <div class="container">
     
-    <h2 class="tituloAdm">Gerenciar chefes</h2>
+    <div class="tituloAdm">
+      <h2>Gerenciar chefes</h2>
+
+      <div>
+          <form action="#" method="GET">
+              <input 
+                  type="text" 
+                  name="filter"
+                  placeholder="Filtrar pelo nome do chefe"
+                  value="{{filter}}"
+              >
+              <button type="submit">Buscar</button>
+          </form>
+      </div>
+    </div>
     
     <div class="listaChefeAdm">
       

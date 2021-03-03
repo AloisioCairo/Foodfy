@@ -1,0 +1,33 @@
+{% extends "layout.njk" %}
+
+
+{% block content %}
+    <div class="container">
+        <h3>
+            Buscando por {{filter}}
+        <h3>
+        <div class="listaReceitas mt-20px">
+            {% for recipe in recipes %}
+                <div class="receita">
+                <a href="/courses/{{ recipe.id }}"><img class="imgReceita" src="{{ recipe.image }}" /></a>
+                
+                <div class="tituloReceita" id="temp">              
+                    {{ recipe.title }}
+                </div>
+
+                <div class="autorReceita">
+                    por {{ recipe.name }}
+                </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="pagination"
+            data-page={{pagination.page}}
+            data-total={{pagination.total}}
+            data-filter={{filter}}
+            >
+        </div>
+        
+    </div>
+{% endblock content %}

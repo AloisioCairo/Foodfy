@@ -3,7 +3,7 @@
 {% block content %}
   <div class="container">
     <div class="content">
-      <div class="show">
+      <div class="showDados">
         <h2>Chefe: {{ chef.name }}</h2>
         
         <div class="botaoEditar">
@@ -21,9 +21,30 @@
         </div>
       </div>
 
-      <h3>Receitas</h3>
+      <h3 class="mt-20px">Receitas</h3>
 
-      <div class="listaReceitasAdm">
+      <div class="listaReceitasChefe mt-20px">
+        
+        {% for recipe in recipesChef %}
+                    
+          <img class="imgReceitaChefe" src="{{ recipe.image }}" />
+
+          <div class="dadosInline">  
+            <div class="nomeChefeAdm" id="temp">              
+              {{ recipe.title }}
+            </div>
+
+            <div class="autorReceita">
+              por {{ chef.name }}
+            </div>
+
+            <div>
+              <a href="/admin/recipes/{{ recipe.id }}">Visualizar</a>
+            </div>
+          </div>
+        
+        {% endfor %}
+
       </div>
 
     </div>
