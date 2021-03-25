@@ -16,6 +16,10 @@ body {
   position: relative;
 
   /*background-color: var(--primary-color);*/
+
+  /* Colocar o footer no final da página */
+  display: flex;
+  flex-direction: column;
 }
 
 header {
@@ -146,10 +150,116 @@ a {
   width: 260px;  
 }
 
+#galeriaReceita {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  grid-gap: 2px;
+  margin-top: 5px;
+}
+
+form #galeriaReceita #photos-upload {
+  position: relative;
+
+  display: block;
+  overflow: hidden;
+
+  width: 130px;
+  height: 150px;
+  border: 1px solid #DDDDDD;
+}
+
+form #galeriaReceita #photos-upload #photos-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+form #galeriaReceita #photos-preview {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 2px;
+}
+
+#photos-preview .photo {
+  position: relative;
+}
+
+#photos-preview .photo i {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  background-color: rgba(255, 255, 255, 0.8);
+  color: red;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 500%;
+  cursor: pointer;
+
+  transition: opacity 200ms;
+
+  opacity: 0;
+}
+
+#photos-preview .photo:hover i {
+  opacity: 1;
+}
+
+form #galeriaReceita #photos-preview img {
+  width: 100%;
+  height: 150px;
+
+  object-fit: cover;
+}
+
+#addImgReceita {
+  height: 100%;
+  width: 100%;
+  border-radius: 3px;
+  color: #FFFFFF 100%;
+
+}
+
+form #galeriaReceita #photos-upload #addImgReceita i {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 300%;
+  color: #c5bfbf;
+
+  height: 100%;
+  width: 100%;
+}
+
+form #galeriaReceita #photos-upload #addImgReceita i:hover {
+  cursor: pointer;
+}
+
 .imgReceita {  
   width: 100%;
-  height: 176px;
-  border-radius: 25px;
+  height: 140px;
+  border-radius: 15px;
+}
+
+#photos-preview {
+  height: 150px;
+  width: 100%;
 }
 
 .receita + .receita {
@@ -159,14 +269,14 @@ a {
 .tituloReceita {
   margin-top: 10px;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .autorReceita {
   margin-top: 5px;
   font-size: 14px;
   font-weight: normal;
-  color: darkgray;
+  color: #777777;
 }
 
 .tituloSobre {
@@ -243,7 +353,7 @@ a {
 .listaChefeAdm {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  gap: 15px;
+  gap: 10px;
 }
 
 .imgReceitaAdm {
@@ -253,9 +363,9 @@ a {
 }
 
 .avatarChefe {
-  width: 70%;
-  height: 70px;
-  border-radius: 100px;
+  width: 100%;
+  height: 80px;
+  border-radius: 60px;
 }
 
 .avatarDetalheChefe {
@@ -698,6 +808,8 @@ footer {
   font-size: 14px;
   color: #444444;
   border-top: 1px solid #c5bfbf;
+
+  margin-top: auto;
 }
 
 .inicioo {
@@ -731,4 +843,10 @@ footer {
   line-height: 28px;
   font-size: 15px;
   color: #444444;
+}
+
+footer {
+  background-color: black;
+  height: 30px;
+  color: #c5bfbf;
 }

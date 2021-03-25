@@ -51,6 +51,10 @@ module.exports = {
                     page
                 }
 
+                console.log('recipes[0].total_' + recipes[0].total)
+                console.log('limit_' + limit)
+                console.log('Math.ceil(recipes[0].total / limit)_' + Math.ceil(recipes[0].total / limit))
+
                 //return res.render(`recipes_filter.njk`, { recipes, pagination, filter })
                 return res.render("./admin/recipes/index.njk", { recipes, pagination, filter })
             }

@@ -8,14 +8,35 @@
 </div>
 
 <div class="tituloEdicao">Imagem da receita</div>
-<div>
+<div id="galeriaReceita">
+    <div id="photos-upload">
+        <div id="addImgReceita">
+            <i class="material-icons">add</i>
+        </div>
+        <input
+            id="photos-input"
+            type="file"
+            name="photos"
+            multiple
+            accept="image/*"
+            onchange="PhotosUpload.handleFileInput(event)"
+        >
+        
+    </div>
+
+
+    <div id="photos-preview">
+    </div>
+
+</div>
+<!--<div>
     <input 
         type="url" 
         name="image"
         placeholder="http://"
         value="{{ recipe.image }}"
     >    
-</div>
+</div>-->
 
 <div class="tituloEdicao">Chefe</div>
 <div>

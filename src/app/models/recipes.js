@@ -175,8 +175,9 @@ module.exports = {
             ${filterQuery}
             LIMIT $1 OFFSET $2
             `
+        //console.log(query)
 
-        db.query(query, [4, offset], function (err, results) {
+        db.query(query, [limit, offset], function (err, results) {
             if (err)
                 throw 'Erro na leitura dos dados no banco de dados.'
 

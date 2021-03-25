@@ -14,7 +14,7 @@
           <input type="hidden" name="id" value="{{ recipe.id }}">
       </form>
 
-      <form id="form-put" class="pb-20px" method="POST" action="/admin/recipes?_method=PUT">
+      <form id="form-put" class="pb-20px" method="POST" action="/admin/recipes?_method=PUT" enctype="multipart/form-data">
         <input type="hidden" name="id" value="{{ recipe.id }}">
         {% include './fields.njk' %}
       </form>

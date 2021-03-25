@@ -8,6 +8,63 @@ for (item of menuItens) {
     }
 }
 
+const PhotosUpload = {
+    preview: document.querySelector('#photos-preview'),
+    uploadLimit: 5,
+    handleFileInput(event) {
+        const { files: fileList } = event.target
+
+        if (PhotosUpload.hasLimit(event))
+            return
+
+        Array.from(fileList).forEach(file => {
+            const reader = new FileReader()
+
+            reader.onload = () => {
+                const image = new Image() // Tem a mesma função de criar a tag <img>
+                image.src = String(reader.result)
+
+                const div = PhotosUpload.getContainer(image)
+
+                PhotosUpload.preview.appendChild(div)
+            }
+
+            reader.readAsDataURL(file)
+        })
+    },
+    hasLimit(event) {
+        const { uploadLimit } = PhotosUpload
+        const { files: fileList } = event.target
+
+        if (fileList.length > uploadLimit) {
+            alert(`Envie no máximo ${uploadLimit} fotos`)
+            event.preventDefault()
+            return true
+        }
+
+        return false
+    },
+    getContainer(image) {
+        const div = document.createElement('div')
+        div.classList.add('photo')
+
+        div.onclick = () => alert('remover foto')
+
+        div.appendChild(image)
+
+        div.appendChild(PhotosUpload.getRemoveButton()) // Adc. o botão de remover a imagem
+
+        return div // Retorna a <div> com a imagem
+    },
+    getRemoveButton() {
+        const button = document.createElement('i')
+        button.classList.add('material-icons')
+        button.innerHTML = "close"
+        return button
+    },
+}
+
+
 function paginate(selectedPage, totalPages) {
     let pages = [],
         oldPage
@@ -63,6 +120,10 @@ const pagination = document.querySelector(".pagination")
 if (pagination) {
     createPagination(pagination)
 }
+
+console.log('pagination' + pagination)
+//console.log('page' + page)
+//console.log('total' + total)
 
 // Função para mostrar/esconder os itens da receita
 function mostrarEsconderItemReceita() {
