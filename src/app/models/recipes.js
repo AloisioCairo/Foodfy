@@ -7,7 +7,7 @@ const { off } = require('../../config/db')
 module.exports = {
     maisAcessadas(callback) {
         db.query(` 
-        SELECT recipes.id, image, title, chefs.name FROM recipes
+        SELECT recipes.id, title, chefs.name FROM recipes
         INNER JOIN chefs ON (chefs.id = recipes.chef_id)
         ORDER BY recipes."title" 
         LIMIT 6`, function (err, results) {
@@ -49,47 +49,43 @@ module.exports = {
         */
     },
     create(data, callback) {
-        const query = `INSERT INTO recipes (title, image, chef_id, ingredients, preparation, information, created_at)
-            VALUES ($1, $2, $3, $4, $5, $6, $7)
+        const query = `INSERT INTO recipes (title, chef_id, ingredients, preparation, information, created_at)
+            VALUES ($1, $2, $3, $4, $5, $6)
             RETURNING id`
 
         const values = [
-            data.title, data.image, data.chef, data.ingredients, data.preparation, data.information, date(Date.now()).iso
+            data.title, data.chef, data.ingredients, data.preparation, data.information, date(Date.now()).iso
         ]
 
-        db.query(query, values, function (err, results) {
+        return db.query(query, values)
+        /*db.query(query, values, function (err, results) {
             if (err)
                 throw `Erro no banco de dados. ${err}`
 
             callback(results.rows[0])
-        })
+        })*/
     },
-    find(id, callback) {
-        db.query(`SELECT recipes.*, chefs.name FROM recipes
+    find(id) {
+        return db.query(`SELECT recipes.*, chefs.name FROM recipes
         LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
-        WHERE recipes.id = $1`, [id], function (err, results) {
-
-            if (err)
-                throw `Erro no banco de dados: Pesquisar pela receita. ${err}`
-
-            callback(results.rows[0])
-        })
+        WHERE recipes.id = $1`, [id])
     },
-    update(data, callback) {
+    async update(data, callback) {
 
-        const query = `UPDATE recipes SET chef_id = $1, title = $2, image = $3, ingredients = $4, preparation = $5, 
-                        information = $6 WHERE id = $7`
+        const query = `UPDATE recipes SET chef_id = $1, title = $2, ingredients = $3, preparation = $4, 
+                        information = $5 WHERE id = $6`
 
         const values = [
-            data.chef, data.title, data.image, data.ingredients, data.preparation, data.information, data.id
+            data.chef, data.title, data.ingredients, data.preparation, data.information, data.id
         ]
 
-        db.query(query, values, function (err, results) {
+        return db.query(query, values);
+        /*db.query(query, values, function (err, results) {
             if (err)
                 throw `Erro no banco de dados. ${err}`
 
             callback()
-        })
+        })*/
     },
     delete(id, callback) {
         db.query(`DELETE FROM recipes WHERE id = $1`, [id], function (err, results) {
@@ -99,13 +95,8 @@ module.exports = {
             return callback()
         })
     },
-    chefSelectOptions(callback) {
-        db.query(`SELECT id, name FROM chefs`, function (err, results) {
-            if (err)
-                throw `Erro ao tentar buscar os chefes. ${err}`
-
-            callback(results.rows)
-        })
+    async chefSelectOptions() {
+        return db.query(`SELECT id, name FROM chefs`)
     },
     findByReceitas(filter, callback) {
         db.query(`SELECT recipes.*, chefs.name FROM recipes
@@ -118,6 +109,19 @@ module.exports = {
 
             callback(results.rows)
         })
+    },
+    findOneImageRecipe(id_recipe) {
+        return db.query(`SELECT files.path FROM files
+            INNER JOIN recipe_files ON (recipe_files.file_id = files.id)
+            WHERE recipe_files.recipe_id = $1
+            ORDER BY files.id ASC
+            LIMIT 1`, [id_recipe])
+    },
+    files(id_recipe) {
+        return db.query(`SELECT recipe_files.id, files.path FROM files
+            INNER JOIN recipe_files ON (recipe_files.file_id = files.id)
+            WHERE recipe_files.recipe_id = $1
+            ORDER BY files.id ASC`, [id_recipe])
     },
     paginate(params) {
         const { filter, limit, offset, callback } = params
@@ -137,7 +141,7 @@ module.exports = {
         }
 
         query = `
-            SELECT recipes.id, image, title, chefs.name, ${totalQuery}
+            SELECT recipes.id, title, chefs.name, ${totalQuery}
             FROM recipes
             LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
             ${filterQuery}
@@ -169,7 +173,7 @@ module.exports = {
         }
 
         query = `
-            SELECT recipes.id, image, title, chefs.name, ${totalQuery}
+            SELECT recipes.id, title, chefs.name, ${totalQuery}
             FROM recipes
             LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
             ${filterQuery}
@@ -177,7 +181,7 @@ module.exports = {
             `
         //console.log(query)
 
-        db.query(query, [limit, offset], function (err, results) {
+        return db.query(query, [limit, offset], function (err, results) {
             if (err)
                 throw 'Erro na leitura dos dados no banco de dados.'
 
