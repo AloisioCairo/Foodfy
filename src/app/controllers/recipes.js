@@ -46,7 +46,7 @@ module.exports = {
         let { filter, page, limit } = req.query
 
         page = page || 1
-        limit = limit || 2
+        limit = limit || 6
         let offset = limit * (page - 1)
 
         const params = {
@@ -60,26 +60,20 @@ module.exports = {
                     page
                 }
 
+                /*
+                results = Recipes.findOneImageRecipe(recipes.id)
+                const files = results.rows.map(file => ({
+                    ...file,
+                    src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
+                }))
+                */
+
                 //return res.render(`recipes_filter.njk`, { recipes, pagination, filter })
                 return res.render("./admin/recipes/index.njk", { recipes, pagination, filter })
             }
         }
 
         Recipes.paginateAdm(params)
-
-        /*
-        const { filter } = req.query
-        console.log('1')
-        if (filter) { // O usuário filtrou pelo nome da receita ou do chefe
-            Recipes.all(filter, function (recipes) {
-                return res.render("./admin/recipes/index.njk", { recipes, filter })
-            })
-        } else {
-            console.log('2')
-            Recipes.all('', function (recipes) {
-                return res.render("./admin/recipes/index.njk", { recipes, filter })
-            })
-        }*/
     },
     async show(req, res) {
         let results = await Recipes.find(req.params.id)
@@ -95,7 +89,14 @@ module.exports = {
             src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
         }))
 
-        return res.render("./admin/recipes/show.njk", { recipe, files })
+        // Busca todas as imagens do cadastro da receita
+        results = await Recipes.files(recipe.id)
+        const allFiles = results.rows.map(file => ({
+            ...file,
+            src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
+        }))
+
+        return res.render("./admin/recipes/show.njk", { recipe, files, allFiles })
     },
     exibe(req, res) {
         Recipes.find(req.params.id, function (recipe) {

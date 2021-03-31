@@ -111,6 +111,7 @@ module.exports = {
         })
     },
     findOneImageRecipe(id_recipe) {
+        console.log('id_recipe_' + id_recipe)
         return db.query(`SELECT files.path FROM files
             INNER JOIN recipe_files ON (recipe_files.file_id = files.id)
             WHERE recipe_files.recipe_id = $1

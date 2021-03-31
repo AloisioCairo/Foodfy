@@ -13,9 +13,23 @@
           </div>
         </div>
 
-        <div class="centralizar">
-          <img class="imgReceitaDet" src="{{ files[0].src }}"/> 
+        <div class="galeriaImgReceita">
+          <img class="imgReceitaDet" src="{{ files[0].src }}"/>  
           
+          <div class="previewImgReceita">
+            {% if allFiles %}
+              {% for image in allFiles %}
+                <img src="{{ image.src }}" alt="{{ image.name }}"/>
+              {% endfor %}
+              
+            {% endif %}
+            
+            
+            
+          </div>
+        <div>
+
+        <div class="centralizar">
           <div class="tituloAdmin">
             {{ recipe.title }}
           </div>
