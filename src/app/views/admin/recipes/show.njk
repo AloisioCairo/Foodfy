@@ -19,7 +19,14 @@
           <div class="previewImgReceita">
             {% if allFiles %}
               {% for image in allFiles %}
-                <img src="{{ image.src }}" alt="{{ image.name }}"/>
+                <img 
+                  src="{{ image.src }}" 
+                  alt="{{ image.name }}"
+                  {% if loop.index0 == 0 %} 
+                      class="active"
+                  {% endif %}
+                  onclick="alteraImagemGaleria.alteraImage(event)"  
+                />
               {% endfor %}
               
             {% endif %}

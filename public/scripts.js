@@ -8,6 +8,8 @@ for (item of menuItens) {
     }
 }
 
+
+
 const PhotosUpload = {
     input: "",
     preview: document.querySelector('#photos-preview'),
@@ -116,6 +118,7 @@ const PhotosUpload = {
 }
 
 
+
 function paginate(selectedPage, totalPages) {
     let pages = [],
         oldPage
@@ -172,9 +175,23 @@ if (pagination) {
     createPagination(pagination)
 }
 
-console.log('pagination' + pagination)
-//console.log('page' + page)
-//console.log('total' + total)
+
+
+// Altera a imagem principal da receita na página "show.njk" de receitas do paínel administrativo
+const alteraImagemGaleria = {
+    galeria: document.querySelector('.recipe .galeriaImgReceita > img'),
+    previews: document.querySelectorAll('.recipe .galeriaImgReceita .previewImgReceita img'),
+    alteraImage(e) {
+        const { target } = e
+
+        alteraImagemGaleria.previews.forEach(preview => preview.classList.remove('active'))
+        target.classList.add('active')
+
+        alteraImagemGaleria.galeria.src = target.src
+    }
+}
+
+
 
 // Função para mostrar/esconder os itens da receita
 function mostrarEsconderItemReceita() {
@@ -206,6 +223,7 @@ function mostrarEsconderItemReceita() {
 document
     .querySelector(".ingrediente")
     .addEventListener("click", mostrarEsconderItemReceita);
+
 
 
 // Função para mostrar/esconder os modos de preparo da receita
@@ -276,7 +294,10 @@ document
 
 
 
+
+
 // Função para adicionar um novo componente input para os ingredientes
+console.log(".add-ingrediente")
 function addIngredient() {
     const ingredients = document.querySelector("#ingredients");
     const fieldContainer = document.querySelectorAll(".ingredient");
@@ -297,10 +318,6 @@ document
     .addEventListener("click", addIngredient);
 
 console.log("1__.add-ingrediente")
-
-
-
-
 
 
 
@@ -353,26 +370,7 @@ console.log("2__.add-modo-preparo")
 
 
 
-/*
-function mostrarEsconder() {
-    console.log("11111111111111")
-    for (let button of buttons) {
-        button.addEventListener('click', () => {
-            const target = document.querySelector(`#${button.getAttribute('target')} .itemIngredienteReceita`)
-            target.classList.toggle('hide-itemIngredienteReceita')
-            if (target.classList.contains('hide-itemIngredienteReceita')) {
-                button.textContent = 'mostrar'
-            } else {
-                button.textContent = 'esconder'
-            }
-        })
-    }
-}
 
-document
-    .querySelector(".ingredients-section")
-    .addEventListener("click", mostrarEsconder);
-*/
 
 
 

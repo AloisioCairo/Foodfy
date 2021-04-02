@@ -1,5 +1,7 @@
 const { age, date, format } = require('../../lib/utils')
 const Chefs = require('../models/chefs')
+const file = require('../models/file')
+const File = require('../models/file')
 
 module.exports = {
     lista(req, res) {
@@ -15,7 +17,7 @@ module.exports = {
     create(req, res) {
         return res.render("./admin/chefs/create.njk")
     },
-    post(req, res) {
+    async post(req, res) {
         const keys = Object.keys(req.body)
 
         for (key of keys) {
@@ -24,9 +26,15 @@ module.exports = {
             }
         }
 
-        Chefs.create(req.body, function (chefs) {
-            return res.redirect(`./chefs/${chefs.id}`)
-        })
+        // Salva a foto do chefe
+        const fileId = await Promise.all(req.files.map(file => File.create({
+            ...file, recipe_id: 0
+        })))
+
+        results = await Chefs.create(req.body, fileId[0].rows[0].id)
+        const chefs = results.rows[0]
+
+        return res.redirect(`./chefs/${chefs.id}`)
     },
     index(req, res) {
         const { filter } = req.query
@@ -41,27 +49,34 @@ module.exports = {
             })
         }
     },
-    show(req, res) {
-        Chefs.find(req.params.id, function (chef) {
+    async show(req, res) {
+        let results = await Chefs.find(req.params.id)
+        const chef = results.rows[0]
 
-            if (!chef)
-                return res.send('Chefe não localizado.')
+        if (!chef)
+            return res.send('Chefe não localizado.')
 
-            //return res.render("./admin/chefs/show.njk", { chef }) 
+        // Seleciona a foto
+        results = await File.finFileChef(chef.id)
+        const files = results.rows.map(file => ({
+            ...file,
+            src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
+        }))
 
-            Chefs.recipesChef(req.params.id, function (recipesChef) {
-                return res.render("./admin/chefs/show.njk", { chef, recipesChef })
-            })
-        })
+        // Seleciona as receitas
+        results = await Chefs.recipesChef(chef.id)
+        const recipesChef = results.rows
+
+        return res.render("./admin/chefs/show.njk", { chef, recipesChef, files })
     },
-    edit(req, res) {
-        Chefs.find(req.params.id, function (chef) {
+    async edit(req, res) {
+        let results = await Chefs.find(req.params.id)
+        const chef = results.rows[0]
 
-            if (!chef)
-                return res.send('Chefe não localizado.')
+        if (!chef)
+            return res.send('Chefe não localizado.')
 
-            return res.render("./admin/chefs/edit.njk", { chef })
-        })
+        return res.render("./admin/chefs/edit.njk", { chef })
     },
     put(req, res) {
         const keys = Object.keys(req.body)

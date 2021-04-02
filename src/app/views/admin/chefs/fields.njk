@@ -8,10 +8,24 @@
 </div>
 
 <div class="tituloEdicao">Avatar</div>
+
+{% if chef %}
 <div>
     <input 
         type="text" 
-        name="avatar_url"
-        value="{{ chef.avatar_url }}"
+        name="name"
+        value="{{ chef.path }}"
     >    
+</div>
+{% endif %}
+
+<div class="mt-10px fotoChefe">
+    <input
+        id="photo-input"
+        type="file"
+        name="photo"
+        multiple
+        accept="image/*"
+    >
+    <p>Enviar avatar</p>
 </div>

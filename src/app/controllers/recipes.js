@@ -1,14 +1,22 @@
 const { age, date, format } = require('../../lib/utils')
-const recipes = require('../models/recipes')
 const Recipes = require('../models/recipes')
 const File = require('../models/file')
-const file = require('../models/file')
 
 module.exports = {
-    maisAcessadas(req, res) {
-        Recipes.maisAcessadas(function (recipes) {
-            return res.render(`courses.njk`, { recipes })
-        })
+    async maisAcessadas(req, res) {
+
+        let results = await Recipes.maisAcessadas()
+        const recipes = results.rows
+
+        // Busca a 1º imagem selecionado no cadastro da receita
+        results = await Recipes.findOneImageRecipe(recipes.id)
+        const files = results.rows.map(file => ({
+            ...file,
+            src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
+        }))
+
+        return res.render(`courses.njk`, { recipes, files })
+
     },
     lista(req, res) {
         Recipes.all(function (recipes) {
@@ -98,14 +106,28 @@ module.exports = {
 
         return res.render("./admin/recipes/show.njk", { recipe, files, allFiles })
     },
-    exibe(req, res) {
-        Recipes.find(req.params.id, function (recipe) {
+    async exibe(req, res) {
+        let results = await Recipes.find(req.params.id)
+        const recipe = results.rows[0]
 
+        // Busca todas as imagens do cadastro da receita
+        results = await Recipes.findOneImageRecipe(recipe.id)
+        const files = results.rows.map(file => ({
+            ...file,
+            src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
+        }))
+
+        return res.render("courses/show", { recipe, files })
+
+
+
+        /*Recipes.find(req.params.id, function (recipe) {
+ 
             if (!recipe)
                 return res.send('Receita não localizada.')
-
+ 
             return res.render("courses/show", { recipe })
-        })
+        })*/
     },
     async edit(req, res) {
         let results = await Recipes.find(req.params.id)
@@ -190,7 +212,7 @@ module.exports = {
         Recipes.paginate(params)
 
         /*const { filter } = req.query
-
+ 
         if (filter) { // Se o usuário informar o nome da receita
             Recipes.findByReceitas(filter, function (recipes) {
                 return res.render(`recipes_filter.njk`, { recipes, filter })
