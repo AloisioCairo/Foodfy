@@ -52,14 +52,5 @@ module.exports = {
         } catch (err) {
             console.error('Erro ao tentar pesquisar uma imagem. Erro: ' + err)
         }
-    },
-    async finFileChef(id_chefe) {
-        try {
-            return await db.query(`SELECT files.path FROM files
-            LEFT JOIN chefs on (chefs.file_id = files.id)  
-            WHERE chefs.id = $1`, [id_chefe])
-        } catch (err) {
-            console.error('Erro ao tentar pesquisar a foto do chefe. Erro: ' + err)
-        }
     }
 }

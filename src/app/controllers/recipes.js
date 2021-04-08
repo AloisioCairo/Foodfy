@@ -8,15 +8,25 @@ module.exports = {
         let results = await Recipes.maisAcessadas()
         const recipes = results.rows
 
-        // Busca a 1º imagem selecionado no cadastro da receita
-        results = await Recipes.findOneImageRecipe(recipes.id)
-        const files = results.rows.map(file => ({
-            ...file,
-            src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
-        }))
+        // Retorna a imagem principal da receita
+        async function getImage(recipeId) {
+            let results = await Recipes.findOneImageRecipe(recipeId)
+            const files = results.rows.map(file => `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`)
 
-        return res.render(`courses.njk`, { recipes, files })
+            return files[0]
+        }
 
+        // Essa const retorna um array com as receitas do chefe
+        const recipesPromise = recipes.map(async recipe => {
+            recipe.img = await getImage(recipe.id)
+            recipe.name = recipe.name
+
+            return recipe
+        })
+
+        const recipesAdded = await Promise.all(recipesPromise)
+
+        return res.render(`courses.njk`, { recipes: recipesAdded })
     },
     lista(req, res) {
         Recipes.all(function (recipes) {
@@ -61,27 +71,36 @@ module.exports = {
             filter,
             page,
             limit,
-            offset,
-            callback(recipes) {
-                const pagination = {
-                    total: Math.ceil(recipes[0].total / limit),
-                    page
-                }
-
-                /*
-                results = Recipes.findOneImageRecipe(recipes.id)
-                const files = results.rows.map(file => ({
-                    ...file,
-                    src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
-                }))
-                */
-
-                //return res.render(`recipes_filter.njk`, { recipes, pagination, filter })
-                return res.render("./admin/recipes/index.njk", { recipes, pagination, filter })
-            }
+            offset
         }
 
-        Recipes.paginateAdm(params)
+        let results = await Recipes.paginateAdm(params)
+        const recipes = results.rows
+
+        const pagination = { // recipes.total
+            total: Math.ceil(recipes[0].total / limit),
+            page
+        }
+
+        // Retorna a imagem principal da receita
+        async function getImage(recipeId) {
+            let results = await Recipes.findOneImageRecipe(recipeId)
+            const files = results.rows.map(file => `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`)
+
+            return files[0]
+        }
+
+        // Essa const retorna um array com os dados das receitas
+        const recipesPromise = recipes.map(async recipe => {
+            recipe.img = await getImage(recipe.id)
+            recipe.name = recipe.name
+
+            return recipe
+        })
+
+        const recipesAdded = await Promise.all(recipesPromise)
+
+        return res.render("./admin/recipes/index.njk", { recipes: recipesAdded, pagination, filter })
     },
     async show(req, res) {
         let results = await Recipes.find(req.params.id)
@@ -186,7 +205,7 @@ module.exports = {
             return res.redirect(`./recipes/`)
         })
     },
-    findByReceitas(req, res) {
+    async findByReceitas(req, res) {
 
         let { filter, page, limit } = req.query
 
@@ -198,29 +217,36 @@ module.exports = {
             filter,
             page,
             limit,
-            offset,
-            callback(recipes) {
-                const pagination = {
-                    total: Math.ceil(recipes[0].total / limit),
-                    page
-                }
-
-                return res.render(`recipes_filter.njk`, { recipes, pagination, filter })
-            }
+            offset
         }
 
-        Recipes.paginate(params)
+        let results = await Recipes.paginate(params)
+        const recipes = results.rows
 
-        /*const { filter } = req.query
- 
-        if (filter) { // Se o usuário informar o nome da receita
-            Recipes.findByReceitas(filter, function (recipes) {
-                return res.render(`recipes_filter.njk`, { recipes, filter })
-            })
-        } else {
-            Recipes.maisAcessadas(function (recipes) {
-                return res.render(`courses.njk`, { recipes })
-            })
-        }*/
+        const pagination = {
+            total: Math.ceil(recipes[0].total / limit),
+            page
+        }
+
+        // Retorna a imagem principal da receita
+        async function getImage(recipeId) {
+            let results = await Recipes.findOneImageRecipe(recipeId)
+            const files = results.rows.map(file => `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`)
+
+            return files[0]
+        }
+
+        // Essa const retorna um array com os dados das receitas
+        const recipesPromise = recipes.map(async recipe => {
+            recipe.img = await getImage(recipe.id)
+            recipe.name = recipe.name
+
+            return recipe
+        })
+
+        const recipesAdded = await Promise.all(recipesPromise)
+
+        return res.render(`recipes_filter.njk`, { recipes: recipesAdded, pagination, filter })
+
     }
 }

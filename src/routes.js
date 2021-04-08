@@ -43,10 +43,10 @@ routes.delete("/admin/recipes", recipes.delete); // Deletar uma receita
 
 routes.get("/admin/chefs", chefs.index); // Mostrar a lista de chefes
 routes.get("/admin/chefs/create", chefs.create); // Mostrar formulário de nova chefe
-routes.get("/admin/chefs/:id", chefs.show); // Exibir detalhes de uma chefe
+routes.get("/admin/chefs/:id", chefs.show); // Exibir detalhes de um chefe
 routes.post("/admin/chefs", multer.array("photo", 1), chefs.post); // Cadastrar nova chefe
 routes.get("/admin/chefs/:id/edit", chefs.edit); // Mostrar formulário de edição de chefe
-routes.put("/admin/chefs", multer.array("photo", 1), chefs.put); // Editar uma chefe
-routes.delete("/admin/chefs", chefs.delete); // Deletar uma chefe
+routes.put("/admin/chefs", multer.array("photo", 1), chefs.put); // Editar um chefe
+routes.delete("/admin/chefs", chefs.delete); // Deletar um chefe
 
 module.exports = routes

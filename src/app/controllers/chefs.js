@@ -1,7 +1,7 @@
 const { age, date, format } = require('../../lib/utils')
 const Chefs = require('../models/chefs')
-const file = require('../models/file')
 const File = require('../models/file')
+const Recipes = require('../models/recipes')
 
 module.exports = {
     lista(req, res) {
@@ -9,10 +9,29 @@ module.exports = {
             return res.render("courses/index.njk", { chefs })
         })
     },
-    listaChefes(req, res) {
-        Chefs.listAll(function (chefs) {
-            return res.render("chefs.njk", { chefs })
+    async listaChefes(req, res) {
+        let results = await Chefs.listAll()
+        const chefs = results.rows
+
+        // Retorna a imagem do chefe
+        async function getImage(chefId) {
+            let results = await Chefs.file(chefId)
+            const files = results.rows.map(file => `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`)
+
+            return files[0]
+        }
+
+        // Essa const retorna um array
+        const chefsPromise = chefs.map(async chef => {
+            chef.img = await getImage(chef.id)
+            chef.name = chef.name
+
+            return chef
         })
+
+        const chefAdded = await Promise.all(chefsPromise)
+
+        return res.render("chefs.njk", { chefs: chefAdded })
     },
     create(req, res) {
         return res.render("./admin/chefs/create.njk")
@@ -36,17 +55,56 @@ module.exports = {
 
         return res.redirect(`./chefs/${chefs.id}`)
     },
-    index(req, res) {
+    async index(req, res) {
         const { filter } = req.query
 
         if (filter) {
-            Chefs.all(filter, function (chefs) {
-                return res.render("./admin/chefs/index.njk", { filter, chefs })
+            let results = await Chefs.all(filter)
+            const chefs = results.rows
+
+            // Retorna a imagem do chefe
+            async function getImage(chefId) {
+                let results = await Chefs.file(chefId)
+                const files = results.rows.map(file => `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`)
+
+                return files[0]
+            }
+
+            // Essa const retorna um array
+            const chefsPromise = chefs.map(async chef => {
+                chef.img = await getImage(chef.id)
+                chef.name = chef.name
+
+                return chef
             })
+
+            const lastAdded = await Promise.all(chefsPromise)
+
+            return res.render("./admin/chefs/index.njk", { filter, chefs: lastAdded })
+
         } else {
-            Chefs.all('', function (chefs) {
-                return res.render("./admin/chefs/index.njk", { filter, chefs })
+            let results = await Chefs.all('')
+            const chefs = results.rows
+
+            // Retorna a imagem do chefe
+            async function getImage(chefId) {
+                let results = await Chefs.file(chefId)
+                const files = results.rows.map(file => `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`)
+
+                return files[0]
+            }
+
+            // Essa const retorna um array
+            const chefsPromise = chefs.map(async chef => {
+                chef.img = await getImage(chef.id)
+                chef.name = chef.name
+
+                return chef
             })
+
+            const lastAdded = await Promise.all(chefsPromise)
+
+            return res.render("./admin/chefs/index.njk", { filter, chefs: lastAdded })
         }
     },
     async show(req, res) {
@@ -57,17 +115,40 @@ module.exports = {
             return res.send('Chefe não localizado.')
 
         // Seleciona a foto
-        results = await File.finFileChef(chef.id)
+        results = await Chefs.file(chef.id)
         const files = results.rows.map(file => ({
             ...file,
             src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
         }))
 
+
+
+
+
+        // - - - - - - Funções para buscar os dados das receitas do chefe - - - - - -
         // Seleciona as receitas
         results = await Chefs.recipesChef(chef.id)
-        const recipesChef = results.rows
+        const resultsRecipesChef = results.rows
 
-        return res.render("./admin/chefs/show.njk", { chef, recipesChef, files })
+        // Retorna a imagem principal da receita
+        async function getImage(recipeId) {
+            let results = await Recipes.findOneImageRecipe(recipeId)
+            const files = results.rows.map(file => `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`)
+
+            return files[0]
+        }
+
+        // Essa const retorna um array com as receitas do chefe
+        const recipesPromise = resultsRecipesChef.map(async recipesChef => {
+            recipesChef.img = await getImage(recipesChef.id)
+            recipesChef.name = recipesChef.name
+
+            return recipesChef
+        })
+
+        const recipesAdded = await Promise.all(recipesPromise)
+
+        return res.render("./admin/chefs/show.njk", { chef, recipesChef: recipesAdded, files })
     },
     async edit(req, res) {
         let results = await Chefs.find(req.params.id)

@@ -15,36 +15,6 @@ module.exports = {
             console.error('Erro ao tentar pesquisar pelas receitas mais acessadas. Erro: ' + err)
         }
     },
-    all(req, res) {
-        /*
-        if (filter) {
-            db.query(` 
-            SELECT recipes.id, image, title, chefs.name FROM recipes
-            LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
-            WHERE recipes.title ILIKE '%${filter}%'
-            OR chefs.name ILIKE '%${filter}%'
-            ORDER BY recipes."title" `, function (err, results) {
-
-                if (err)
-                    throw `Erro na leitura dos dados no banco de dados: Todas as receitas. ${err}`
-
-                callback(results.rows)
-            })
-        }
-        else {
-            db.query(` 
-            SELECT recipes.id, image, title, chefs.name FROM recipes
-            LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
-            ORDER BY recipes."title" `, function (err, results) {
-
-                if (err)
-                    throw `Erro na leitura dos dados no banco de dados: Todas as receitas. ${err}`
-
-                callback(results.rows)
-            })
-        }
-        */
-    },
     create(data) {
         try {
             const query = `INSERT INTO recipes (title, chef_id, ingredients, preparation, information, created_at)
@@ -107,7 +77,7 @@ module.exports = {
             db.query(`SELECT recipes.*, chefs.name FROM recipes
                 LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
                 WHERE recipes.title ILIKE '%${filter}%' 
-                ORDER BY recipes.title ASC`, function (err, results) {
+                ORDER BY recipes.created_at ASC`, function (err, results) {
 
                 if (err)
                     throw `Erro no banco de dados: Pesquisar receita pelo nome. ${err}`
@@ -139,9 +109,9 @@ module.exports = {
             console.error('Erro ao pesquisar as imagens de uma receita. Erro: ' + err)
         }
     },
-    paginate(params) {
+    async paginate(params) {
         try {
-            const { filter, limit, offset, callback } = params
+            const { filter, limit, offset } = params
 
             let query = ""
             filterQuery = ""
@@ -162,22 +132,18 @@ module.exports = {
             FROM recipes
             LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
             ${filterQuery}
+            ORDER BY recipes.updated_at ASC
             LIMIT $1 OFFSET $2
             `
 
-            db.query(query, [4, offset], function (err, results) {
-                if (err)
-                    throw 'Erro na leitura dos dados no banco de dados.'
-
-                callback(results.rows)
-            })
+            return db.query(query, [4, offset])
         } catch (err) {
             console.error('Erro na paginação de receitas. Erro: ' + err)
         }
     },
-    paginateAdm(params) {
+    async paginateAdm(params) {
         try {
-            const { filter, limit, offset, callback } = params
+            const { filter, limit, offset } = params
 
             let query = ""
             filterQuery = ""
@@ -198,15 +164,10 @@ module.exports = {
                 FROM recipes
                 LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
                 ${filterQuery}
+                ORDER BY recipes.created_at ASC
                 LIMIT $1 OFFSET $2
             `
-
-            return db.query(query, [limit, offset], function (err, results) {
-                if (err)
-                    throw 'Erro na leitura dos dados no banco de dados.'
-
-                callback(results.rows)
-            })
+            return db.query(query, [limit, offset])
         } catch (err) {
             console.error('Erro na paginação administrativa de receitas. Erro: ' + err)
         }

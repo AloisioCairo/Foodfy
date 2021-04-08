@@ -24,7 +24,7 @@
       <div class="listaReceitas">
          {% for recipe in recipes %}
           <div class="receita">
-            <a href="/courses/{{ recipe.id }}"><img class="imgReceita" src="{{ files[0].src }}" /></a>
+            <a href="/courses/{{ recipe.id }}"><img class="imgReceita" src="{{ recipe.img }}" /></a>
             
             <div class="tituloReceita" id="temp">              
               {{ recipe.title }}

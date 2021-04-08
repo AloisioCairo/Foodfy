@@ -4,45 +4,25 @@ const { age, date } = require('../../lib/utils')
 const db = require('../../config/db')
 
 module.exports = {
-    all(filter, callback) {
+    async all(filter) {
         try {
             if (filter) {
-                db.query(` 
-            SELECT id, name FROM chefs
-            WHERE name ILIKE '%${filter}%'
-            ORDER BY name ASC `, function (err, results) {
-
-                    if (err)
-                        throw `Erro na leitura dos dados no banco de dados: Todas as receitas. ${err}`
-
-                    callback(results.rows)
-                })
+                return db.query(`SELECT id, name FROM chefs
+                                 WHERE name ILIKE '%${filter}%'
+                                 ORDER BY name ASC`)
             } else {
-                db.query(` 
-            SELECT id, name FROM chefs
-            ORDER BY name ASC `, function (err, results) {
-
-                    if (err)
-                        throw `Erro na leitura dos dados no banco de dados: Todas as receitas. ${err}`
-
-                    callback(results.rows)
-                })
+                return db.query(`SELECT id, name FROM chefs
+                                 ORDER BY name ASC`)
             }
         } catch (err) {
             console.error('Erro ao filtrar cadastro de chefes. Erro: ' + err)
         }
     },
-    listAll(callback) {
+    async listAll() {
         try {
-            db.query(`SELECT chefs.name, COUNT(recipes.id) AS qtde_receitas FROM chefs
-            LEFT JOIN recipes on (recipes.chef_id = chefs.id)  
-            GROUP BY chefs.name `, function (err, results) {
-
-                if (err)
-                    throw `Erro na leitura dos dados no banco de dados: Todas as receitas. ${err}`
-
-                callback(results.rows)
-            })
+            return db.query(`SELECT chefs.id, chefs.name, COUNT(recipes.id) AS qtde_receitas FROM chefs
+                LEFT JOIN recipes on (recipes.chef_id = chefs.id)  
+                GROUP BY chefs.id, chefs.name`)
         } catch (err) {
             console.error('Erro ao listar todos os chefes. Erro: ' + err)
         }
@@ -119,6 +99,16 @@ module.exports = {
             return db.query(`SELECT * FROM recipes WHERE chef_id = $1`, [id])
         } catch (err) {
             console.error('Erro ao selecionar as receitas de um chefe. Erro: ' + err)
+        }
+    },
+    async file(id) {
+        try {
+            return await db.query(`SELECT files.path
+                                   FROM files
+                                   LEFT JOIN chefs on (chefs.file_id = files.id)
+                                   WHERE chefs.id = $1`, [id])
+        } catch (err) {
+            console.error('Erro ao pesquisar por um chefe. Erro: ' + err)
         }
     },
     paginate(params) {
