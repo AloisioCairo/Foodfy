@@ -1,0 +1,29 @@
+{% extends "../header.njk" %}
+
+{% block content %}
+    <div class="container">
+        <div class="showDados">
+        
+            <div class="tituloAdm">
+                <h2>Usuários</h2>
+            </div>
+            <div class="botaoNovo">
+                <a href="/admin/users/create">Novo</a>
+            </div>
+        </div>
+        
+        <div class="listaUsuariosAdm">
+            {% for user in users.rows %}
+                <div class="dadosInline">
+                    <div class="nomeUsuario">{{ user.name }}</div>
+                    <div class="autorReceita">{{ user.email }}</div>
+                    <div class="acaoUsuario mt-20px">
+                        <div><a class="linkEditar" href="/admin/users/{{ user.id }}/edit">Editar</a></div>
+                        <div><a class="linkExcluir" href="/admin/recipes/{{ user.id }}">Remover</a></div>
+                    </div>
+                </div>
+
+            {% endfor %}
+        <div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,23 @@
+{% extends "../header.njk" %}
+
+{% block content %}
+    <div class="container">
+        <div class="content">
+            <div class="editar">
+                <h3>Criar Usuário</h3>
+                <button form='form-salvar' class="botaoSalvar" type="submit">Salvar</button>
+                <button form='form-cancelar' class="botaoCancelar" type="submit">Cancelar</button>
+            </div>            
+            
+            <form id="form-salvar" method="POST" action="/admin/users">
+                {% include './fields.njk' %}
+            </form>
+
+            <form id="form-cancelar" action="/admin/users">
+            </form>
+            
+        </div>    
+    </div>
+
+    
+{% endblock content %}

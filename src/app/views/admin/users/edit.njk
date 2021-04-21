@@ -1,0 +1,25 @@
+{% extends "../header.njk" %}
+
+{% block content %}
+    <div class="container">
+        <div class="content">
+
+            <div class="editar">
+                <h3>Atualizar Usuário</h3>
+                <button form='form-delete' class="botaoDeletar" type="submit">Deletar</button>
+                <button form='form-put' class="botaoSalvar" type="submit">Salvar</button>
+            </div>
+
+            <form id="form-delete" method="POST" action="/admin/users?_method=DELETE">
+                <input type="hidden" name="id" value="{{ user.id }}">
+            </form>
+
+            <form id="form-put" class="pb-20px" method="POST" action="/admin/users?_method=PUT">
+                <input type="hidden" name="id" value="{{ user.id }}">
+
+                {% include './fields.njk' %}
+
+            </form>
+        </div>
+    </div>
+{% endblock content %}
