@@ -465,10 +465,25 @@ form #galeriaReceita #photos-upload #addImgReceita i:hover {
   margin-bottom: 10px;
 }
 
-.editarReceita {
+.editar {
   display: grid;
   grid-template-columns: 4fr 1fr 1fr;
   margin-bottom: 10px;
+}
+
+
+.botaoNovo a {
+  height: 30px;
+  width: 120px;
+  background-color: #6558C3;
+  border-radius: 4px;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .botaoEditar {
@@ -493,7 +508,7 @@ form #galeriaReceita #photos-upload #addImgReceita i:hover {
   color: white;
 }
 
-.criarReceita {
+.criar {
   display: grid;
   grid-template-columns: 6fr 1fr;
   margin-bottom: 10px;
@@ -511,6 +526,7 @@ form #galeriaReceita #photos-upload #addImgReceita i:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .botaoSalvar {
@@ -525,6 +541,22 @@ form #galeriaReceita #photos-upload #addImgReceita i:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+}
+
+.botaoCancelar {
+  height: 30px; 
+  width: 120px;
+  background-color: #8A8A8A;
+  border-radius: 4px;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
 .menu form {
@@ -741,8 +773,9 @@ textarea {
 
 
 .linksAdm {
-  font-size: 18px;
+  font-size: 14px;
   text-align: right;
+  width: 300px;
 }
 
 .linksAdm a {
@@ -752,7 +785,7 @@ textarea {
 }
 
 .linksAdm a + a {
-  margin-left: 60px;
+  margin-left: 40px;
 }
 
 .linksAdm a.active {
@@ -908,4 +941,41 @@ footer {
   background-color: black;
   height: 30px;
   color: #c5bfbf;
+}
+
+.listaUsuariosAdm {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 80px;
+  row-gap: 35px;
+}
+
+.nomeUsuario {
+  font-size: 18px;
+}
+
+.acaoUsuario {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.linkEditar {
+  color: #6558C3;
+}
+
+.linkExcluir {
+  color: #F55A5A;
+}
+
+.formUsuario {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 30px;
+}
+
+.inputCheckbox {
+  display: flex;
+  justify-content: center;
 }
