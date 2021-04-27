@@ -19,7 +19,12 @@
                     <div class="autorReceita">{{ user.email }}</div>
                     <div class="acaoUsuario mt-20px">
                         <div><a class="linkEditar" href="/admin/users/{{ user.id }}/edit">Editar</a></div>
-                        <div><a class="linkExcluir" href="/admin/recipes/{{ user.id }}">Remover</a></div>
+                        {# <div><a class="linkExcluir" href="/admin/recipes/{{ user.id }}">Remover</a></div> #}
+
+                        <form id="form-delete" method="POST" action="/admin/users/{{ user.id }}?_method=DELETE">
+                            <input type="hidden" name="id" value="{{ user.id }}">
+                            <button class="buttonDelete" type="submit">Remover</button>                
+                        </form>
                     </div>
                 </div>
 

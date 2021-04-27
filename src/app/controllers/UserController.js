@@ -1,5 +1,5 @@
+const users = require('../models/users')
 const UserModel = require('../models/users')
-const { put } = require('./recipes')
 
 module.exports = {
     async list(req, res) {
@@ -38,7 +38,16 @@ module.exports = {
         }
 
         await UserModel.update(req.body)
-        return res.redirect('')
+        return res.redirect(`/admin/users`)
+    },
+    async delete(req, res) {
+        let result = await users.delete(req.body.id)
+        const recipe = result
 
+        if (recipe != null) {
+            return res.redirect(`/admin/caduso`)
+        } else {
+            return res.redirect(`/admin/users`)
+        }
     }
 }

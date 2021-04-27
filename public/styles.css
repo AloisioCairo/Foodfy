@@ -31,7 +31,7 @@ header {
 
 .menu {
   display: grid;
-  grid-template-columns: 100px 1fr 1fr;
+  grid-template-columns: 100px 1fr 1fr 1fr;
   align-items: center;
 }
 
@@ -390,6 +390,9 @@ form #galeriaReceita #photos-upload #addImgReceita i:hover {
   margin-bottom: 30px;  
   padding-top: 15px;
   padding-bottom: 40px;
+
+  display: grid;
+  grid-template-columns: 1fr 800px 1fr;
 }
 
 .tituloAdm {
@@ -978,4 +981,82 @@ footer {
 .inputCheckbox {
   display: flex;
   justify-content: center;
+}
+
+.buttonDelete {
+  color: #DC4747;
+  font-size: 14px;
+  font-weight: bold;
+  background: none;
+}
+
+.login,
+.password {
+  width: 500px;
+}
+
+.login .header,
+.password .header {
+  text-align: center;
+  color: #111111;
+}
+
+.tituloSecao {
+  font-family: Cochin;
+  font-size: 28px;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 70px;
+}
+
+.login .header h3 + h3,
+.password .header h3 + h3{
+  font-size: 24px;
+  margin-top: 80px;
+  margin-bottom: 30px;
+}
+
+.login .footer,
+.password .footer {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  margin-top: 20px;
+}
+
+.login .footer a {
+  color: #969696;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* .password .footer button {
+  color: #969696;
+  font-size: 14px;
+  font-weight: bold;
+  background: none;
+} */
+
+.botaoSessao {
+  height: 30px;
+  width: 135px;
+  background-color: #6558C3;
+  border-radius: 4px;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+  
+}
+
+.sair {
+  text-align: right;
+  margin-right: 50px;
+  font-weight: bold;
+
+}
+
+.botaoSair {
+  background: none;
+  color: #FFFFFF;
+  font-size: 14px;
+  cursor: pointer;
 }

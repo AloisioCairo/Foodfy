@@ -9,6 +9,7 @@
   </head>
   <body>
     <div class="content headerAdmin">
+      <span></span>
       <div class="container menu">
         <a href="/"><img src="/assets/logo.png" alt="Logo"/></a>
         <div class="linksAdm">                                    
@@ -16,6 +17,13 @@
             <a href="/admin/chefs">CHEFES</a>
             <a href="/admin/users">USUÁRIOS</a>
         </div>
+      </div>
+
+      <div class="sair">
+      {# <span class="botaoSair">SAIR</span> #}
+        <form action="/users/logout" method="POST">
+          <button class="botaoSair">SAIR</button>
+        </form>
       </div>
     </div>
 

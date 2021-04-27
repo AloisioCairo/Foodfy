@@ -9,7 +9,8 @@ CREATE TABLE public.users (
 	created_at timestamp DEFAULT now(),
 	updated_at timestamp DEFAULT now(),
 	CONSTRAINT users_email_key UNIQUE (email),
-	CONSTRAINT users_pkey PRIMARY KEY (id)
+	CONSTRAINT users_pkey PRIMARY KEY (id),
+	CONSTRAINT users_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE public.files (

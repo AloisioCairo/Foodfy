@@ -36,4 +36,18 @@ routes.get("/admin/caduso", function (req, res) {
 routes.get("/courses/list", recipes.findByReceitas);
 routes.get('/courses/:id', recipes.exibe);
 
+
+
+routes.get("/admin", function (req, res) {
+    return res.render("./admin/session/login.njk")
+})
+routes.get('/forgot-password', function (req, res) {
+    return res.render("./admin/session/forgot-password.njk")
+})
+routes.get('/password-reset', function (req, res) {
+    return res.render("./admin/session/password-reset.njk")
+})
+// routes.post('/forgot-password', SessionValidator.forgot, SessionController.forgot)
+// routes.post('/password-reset', SessionValidator.reset, SessionController.reset)
+
 module.exports = routes

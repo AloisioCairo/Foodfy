@@ -32,10 +32,39 @@ module.exports = {
             console.error('Erro ao tentar pesquisar pelo cadastr do usuário. Erro: ' + err)
         }
     },
-    update(id) {
+    update(data) {
+        try {
+            const query = `UPDATE users SET name = $1, is_admin = $2 WHERE id = $3`
 
+            const values = [
+                data.name, data.is_admin, data.id
+            ]
+
+            return db.query(query, values);
+        } catch (err) {
+            console.error('Erro ao tentar atualizar o cadastro do usuário. Erro: ' + err)
+        }
     },
-    delete(id) {
+    async delete(id) {
+        try {
+            let result = await db.query(`SELECT recipes.id from recipes 
+                INNER JOIN users ON (users.id = recipes.user_id)
+                WHERE recipes.user_id = $1
+                LIMIT 1`, [id])
+            const recipe = result.rows[0]
+
+            if (recipe != null) {
+                console.log('null')
+                return recipe
+            } else {
+                console.log('SQL_delete_SQL_delete')
+                db.query(`DELETE FROM users WHERE id = $1`, [id])
+                return recipe
+            }
+
+        } catch (err) {
+            console.error('Erro ao tentar excluir o cadastro de um usuário. Erro: ' + err)
+        }
 
     }
 }

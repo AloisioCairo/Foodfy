@@ -1,0 +1,24 @@
+{% include "./header.njk" %}
+
+{% block content %}
+    
+    <section class="login container ">
+        <form method="POST" action="/users/login">
+
+            <div class="header">
+                <h3>Iniciar Sessão</h3>
+            </div>
+
+            <div class="fields">
+                {% include './fields.njk' %}
+            </div>
+
+            <div class="footer">
+                <a href="/users/forgot-password">Perdeu a senha?</a>
+                <button class="botaoSessao" type="submit">Acessar</button>
+            </div>
+
+        </form>
+    </section>
+    
+{% endblock content %}
