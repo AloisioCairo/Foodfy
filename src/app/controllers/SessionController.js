@@ -10,5 +10,9 @@ module.exports = {
     },
     resetForm(req, res) {
         return res.render("./admin/session/password-reset")
+    },
+    logout(req, res) {
+        req.session.destroy()
+        res.redirect('/admin')
     }
 }

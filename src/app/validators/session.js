@@ -22,6 +22,7 @@ module.exports = {
         })
 
         req.user = user
+        req.session.user = user // Cria a sessão do usuário
 
         next()
     }
