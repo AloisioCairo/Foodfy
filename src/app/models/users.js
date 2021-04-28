@@ -1,5 +1,6 @@
 const db = require('../../config/db')
 const { age, date } = require('../../lib/utils')
+const { hash } = require('bcryptjs') // Biblioteca para fazer o hash da senha
 
 module.exports = {
     async all() {
@@ -10,14 +11,17 @@ module.exports = {
             console.error('Ocorreu um erro ao pesquisar por todos os cadastros de usuários. Erro: ' + err)
         }
     },
-    create(data) {
+    async create(data) {
         try {
             const query = `INSERT INTO users (name, email, password, reset_token, reset_token_expires, is_admin, created_at)
             VALUES ($1, $2, $3, $4, $5, $6, $7)
             RETURNING id`
 
+            data.password = '123'
+            const passwordHash = await hash(data.password, 8)
+
             const values = [
-                data.name, data.email, data.password || 1, data.reset_token, data.reset_token_expires, data.is_admin, date(Date.now()).iso
+                data.name, data.email, passwordHash || 1, data.reset_token, data.reset_token_expires, data.is_admin, date(Date.now()).iso
             ]
 
             return db.query(query, values)
@@ -31,6 +35,24 @@ module.exports = {
         } catch (err) {
             console.error('Erro ao tentar pesquisar pelo cadastr do usuário. Erro: ' + err)
         }
+    },
+    async findOne(filters) {
+        let query = "SELECT * FROM users"
+
+        Object.keys(filters).map(key => {
+            // WHERE | OR | AND
+
+            query = `${query}
+                ${key}
+            `
+
+            Object.keys(filters[key]).map(field => {
+                query = `${query} ${field} = '${filters[key][field]}'`
+            })
+        })
+
+        const results = await db.query(query)
+        return results.rows[0]
     },
     update(data) {
         try {

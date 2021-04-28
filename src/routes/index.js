@@ -6,11 +6,14 @@ const chefs = require('../app/controllers/chefs')
 const routeUsers = require('./users')
 const routeChefs = require('./chefs')
 const routeRecipes = require('./recipes')
+const routeSession = require('./session')
 
 
 routes.use('/admin/users', routeUsers)
 routes.use('/admin/recipes', routeRecipes)
 routes.use('/admin/chefs', routeChefs)
+routes.use('/', routeSession)
+
 
 routes.get("/", function (req, res) {
     return res.redirect("/courses")
@@ -35,19 +38,5 @@ routes.get("/admin/caduso", function (req, res) {
 //routes.get("/courses/list", recipes.lista);
 routes.get("/courses/list", recipes.findByReceitas);
 routes.get('/courses/:id', recipes.exibe);
-
-
-
-routes.get("/admin", function (req, res) {
-    return res.render("./admin/session/login.njk")
-})
-routes.get('/forgot-password', function (req, res) {
-    return res.render("./admin/session/forgot-password.njk")
-})
-routes.get('/password-reset', function (req, res) {
-    return res.render("./admin/session/password-reset.njk")
-})
-// routes.post('/forgot-password', SessionValidator.forgot, SessionController.forgot)
-// routes.post('/password-reset', SessionValidator.reset, SessionController.reset)
 
 module.exports = routes
