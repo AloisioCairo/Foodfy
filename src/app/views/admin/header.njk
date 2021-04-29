@@ -6,6 +6,7 @@
 
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <link rel="stylesheet" href="/styles.css">
+      <link rel="stylesheet" href="/styles/messages.css">
   </head>
   <body>
     <div class="content headerAdmin">
@@ -15,7 +16,10 @@
         <div class="linksAdm">                                    
             <a href="/admin/recipes">RECEITAS</a>
             <a href="/admin/chefs">CHEFES</a>
-            <a href="/admin/users">USUÁRIOS</a>
+            
+            {% if session.user.is_admin %} <!-- Variável global criada em 'server.js' -->
+              <a href="/admin/users">USUÁRIOS</a>
+            {% endif %}
         </div>
       </div>
 
@@ -28,8 +32,8 @@
     </div>
 
     {# Arquivo para exibir as mensagens do sistema #}
-    {% include "../parts/messages.njk" %}
-
+    {% include "../parts/messages.njk" %}    
+    
     {% block content %}
     {% endblock %}
 
