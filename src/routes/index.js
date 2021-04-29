@@ -7,11 +7,11 @@ const routeUsers = require('./users')
 const routeChefs = require('./chefs')
 const routeRecipes = require('./recipes')
 const routeSession = require('./session')
+const session = require('../app/middlewares/session')
 
-
-routes.use('/admin/users', routeUsers)
-routes.use('/admin/recipes', routeRecipes)
-routes.use('/admin/chefs', routeChefs)
+routes.use('/admin/users', session.logedUser, routeUsers)
+routes.use('/admin/recipes', session.logedUser, routeRecipes)
+routes.use('/admin/chefs', session.logedUser, routeChefs)
 routes.use('/', routeSession)
 
 
