@@ -7,7 +7,15 @@ const session = require('./config/session')
 const server = express()
 
 server.use(express.urlencoded({ extended: true }))
+
 server.use(session) // Controle da sessão do usuário
+
+// Cria uma variável global para identificar quando o usuário está logado
+server.use((req, res, next) => {
+    res.locals.session = req.session
+    next()
+})
+
 server.use(express.static('public'))
 server.use(methodOverride('_method'))
 server.use(routes)
