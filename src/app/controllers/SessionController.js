@@ -3,7 +3,7 @@ module.exports = {
         return res.render("./admin/session/login")
     },
     login(req, res) {
-        return res.redirect("/admin/users")
+        return res.redirect("/admin/recipes")
     },
     forgotForm(req, res) {
         return res.render("./admin/session/forgot-password")

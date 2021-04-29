@@ -88,5 +88,13 @@ module.exports = {
             console.error('Erro ao tentar excluir o cadastro de um usuário. Erro: ' + err)
         }
 
+    },
+    async isAdmin(id) {
+        try {
+            return await db.query('SELECT is_admin FROM users WHERE id = $1', [id])
+        } catch (err) {
+            console.error('Erro ao executar a função "idAdmin". Erro: ' + err)
+        }
+
     }
 }
