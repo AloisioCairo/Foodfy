@@ -397,7 +397,7 @@ form #galeriaReceita #photos-upload #addImgReceita i:hover {
 
 .tituloAdm {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 1fr 1fr;
   margin-bottom: 30px;
   align-items: center;
 }
@@ -465,7 +465,7 @@ form #galeriaReceita #photos-upload #addImgReceita i:hover {
 .showDados {
   display: grid;
   grid-template-columns: 6fr 1fr;
-  margin-bottom: 10px;
+  margin-bottom: 40px;
 }
 
 .editar {
@@ -574,13 +574,19 @@ form #galeriaReceita #photos-upload #addImgReceita i:hover {
 }
 
 .menu form button,
-.tituloAdm div form button {
+.tituloAdm div form button,
+div form .busca button {
   height: 30px; 
   width: 100px;
   background-color: #6558C3;
   border-radius: 4px;
   color: white;
   font-size: 14px;
+}
+
+div form .busca input {
+  margin-top: 0;
+  padding-right: 10px;
 }
 
 .tituloAdm div form input {
@@ -710,13 +716,24 @@ form #galeriaReceita #photos-upload #addImgReceita i:hover {
   border-bottom: 1px solid var(--primary-color);
 }
 
-input {
+input[type="text"],
+input[type="email"],
+input[type="password"] {
   width: 100%;
   height: 30px;
   border: 1px solid #DDDDDD;
   border-radius: 4px;
   margin-top: 8px;
   padding: 10px;
+}
+
+.inputCheckbox {
+  display: flex;
+  align-items: center;
+}
+
+input[type="checkbox"] {
+  margin-right: 10px;
 }
 
 select {
@@ -846,7 +863,7 @@ textarea {
 /* Pagination */
 .painel {
   display: grid;
-  grid-template: 64px 1fr 16px / 1fr;  
+  grid-template: 64px 40px 1fr 16px / 1fr;  
 }
 
 .painel .tituloAdm{
@@ -978,16 +995,12 @@ footer {
   column-gap: 30px;
 }
 
-.inputCheckbox {
-  display: flex;
-  justify-content: center;
-}
-
 .buttonDelete {
   color: #DC4747;
   font-size: 14px;
   font-weight: bold;
   background: none;
+  cursor: pointer;
 }
 
 .login,
@@ -1059,4 +1072,10 @@ footer {
   color: #FFFFFF;
   font-size: 14px;
   cursor: pointer;
+}
+
+form .busca {
+  display: grid;
+  grid-template-columns: 5fr 1fr 5fr;
+  align-items: center; 
 }
