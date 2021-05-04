@@ -33,12 +33,11 @@ module.exports = {
             return res.render("courses/index.njk", { recipes })
         })
     },
-    create(req, res) {
-        //return res.render("./admin/recipes/create.njk")
+    async create(req, res) {
+        let results = await Recipes.chefSelectOptions()
+        const chefOptions = results.rows
 
-        Recipes.chefSelectOptions(function (options) {
-            return res.render("./admin/recipes/create.njk", { chefOptions: options })
-        })
+        return res.render("./admin/recipes/create.njk", { chefOptions })
     },
     async post(req, res) {
         const keys = Object.keys(req.body)

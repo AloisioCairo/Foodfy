@@ -8,11 +8,11 @@ const session = require('../app/middlewares/session')
 // routes.put('/admin/profile', ProfileController.put)// Editar o usuário logado
 
 // // Rotas que o administrador irá acessar para gerenciar usuários
-routes.get('/', UserController.list) // Mostrar a lista de usuários cadastrados
+routes.get('/', session.userLevel, UserController.list) // Mostrar a lista de usuários cadastrados
 routes.post('/', UserController.post) // Cadastrar um usuário
 routes.get('/create', session.userIsAdmin, UserController.create) // Mostrar o formulário de criação de um usuário
 routes.put('/', UserController.put) // Editar um usuário
-routes.get('/:id/edit', session.userIsAdmin, UserController.edit) // Mostrar o formulário de edição de um usuário
+routes.get('/:id/edit', UserController.edit) // Mostrar o formulário de edição de um usuário
 routes.delete('/:id', session.userIsAdmin, UserController.delete) // Deletar um usuário
 
 

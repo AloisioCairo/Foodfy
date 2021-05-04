@@ -54,17 +54,42 @@ module.exports = {
         const results = await db.query(query)
         return results.rows[0]
     },
-    update(data) {
+    async update(data) {
         try {
-            const query = `UPDATE users SET name = $1, is_admin = $2 WHERE id = $3`
+            const query = `UPDATE users SET name = $1, password = $2, is_admin = $3 WHERE id = $4`
+
+            const passwordHash = await hash(data.password, 8)
 
             const values = [
-                data.name, data.is_admin, data.id
+                data.name, passwordHash, data.is_admin, data.id
             ]
 
             return db.query(query, values);
         } catch (err) {
             console.error('Erro ao tentar atualizar o cadastro do usuário. Erro: ' + err)
+        }
+    },
+    async updateField(id, fields) {
+        try {
+            let query = "UPDATE users SET"
+
+            Object.keys(fields).map((key, index, array) => {
+                if ((index + 1) < array.length) {
+                    query = `${query}
+                        ${key} = '${fields[key]}',
+                    `
+                } else {
+                    query = `${query}
+                        ${key} = '${fields[key]}'
+                        WHERE id = ${id}
+                    `
+                }
+            })
+
+            await db.query(query)
+            return
+        } catch (err) {
+            console.error('Erro ao tentar atualizar campos do cadastro do usuário. Erro: ' + err)
         }
     },
     async delete(id) {
@@ -76,10 +101,8 @@ module.exports = {
             const recipe = result.rows[0]
 
             if (recipe != null) {
-                console.log('null')
                 return recipe
             } else {
-                console.log('SQL_delete_SQL_delete')
                 db.query(`DELETE FROM users WHERE id = $1`, [id])
                 return recipe
             }

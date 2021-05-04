@@ -1,3 +1,4 @@
+const session = require('express-session')
 const users = require('../models/users')
 const UserModel = require('../models/users')
 
@@ -41,6 +42,10 @@ module.exports = {
         return res.redirect(`/admin/users`)
     },
     async delete(req, res) {
+        if (req.session.user.id == req.body.id) {
+            return res.redirect('./')
+        }
+
         let result = await users.delete(req.body.id)
         const recipe = result
 

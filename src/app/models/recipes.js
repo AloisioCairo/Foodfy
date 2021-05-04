@@ -17,12 +17,12 @@ module.exports = {
     },
     create(data) {
         try {
-            const query = `INSERT INTO recipes (title, chef_id, ingredients, preparation, information, created_at)
-            VALUES ($1, $2, $3, $4, $5, $6)
+            const query = `INSERT INTO recipes (title, chef_id, ingredients, preparation, information, created_at, user_id)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
             RETURNING id`
 
             const values = [
-                data.title, data.chef, data.ingredients, data.preparation, data.information, date(Date.now()).iso
+                data.title, data.chef, data.ingredients, data.preparation, data.information, date(Date.now()).iso, data.userId
             ]
 
             return db.query(query, values)
@@ -67,7 +67,7 @@ module.exports = {
     },
     async chefSelectOptions() {
         try {
-            return db.query(`SELECT id, name FROM chefs`)
+            return await db.query(`SELECT id, name FROM chefs`)
         } catch (err) {
             console.error('Erro ao selecionar todos os cadastros de chefes. Erro: ' + err)
         }
@@ -107,6 +107,13 @@ module.exports = {
                 ORDER BY files.id ASC`, [id_recipe])
         } catch (err) {
             console.error('Erro ao pesquisar as imagens de uma receita. Erro: ' + err)
+        }
+    },
+    async userRecipe(id_recipe) {
+        try {
+            return await db.query('SELECT * FROM recipes WHERE id = $1', [id_recipe])
+        } catch (err) {
+            console.error('Erro ao pesquisar o usuário responsável pela receita. Erro: ' + err)
         }
     },
     async paginate(params) {
