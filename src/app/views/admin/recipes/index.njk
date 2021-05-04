@@ -4,20 +4,27 @@
   <div class="container">
 
     <div class="painel">
-      <div class="tituloAdm">
+      <div class="showDados">
         <h2>Gerenciar receitas</h2>
 
-        <div>
-            <form action="#" method="GET">
-                <input 
-                    type="text" 
-                    name="filter"
-                    placeholder="Filtrar pelo nome da receita ou chefe"
-                    value="{{filter}}"
-                >
-                <button type="submit">Buscar</button>
-            </form>
+        <div class="botaoNovo">
+          <a href="/admin/recipes/create">Nova</a>
         </div>
+      </div>
+
+      <div>
+        <form action="#" method="GET">
+          <div class="busca">
+            <input 
+                type="text" 
+                name="filter"
+                placeholder="Filtrar pelo nome da receita ou chefe"
+                value="{{filter}}"
+            >
+            <button type="submit">Buscar</button>
+            <span></span>
+          </div>
+        </form>
       </div>
       
       <div class="listaReceitasAdm">
@@ -34,15 +41,13 @@
 
           {% endfor %}
       <div>
-
-      
-
-    </div>    
+    </div>
   </div>
+  
   <div class="pagination"
-          data-page={{pagination.page}}
-          data-total={{pagination.total}}
-          data-filter={{filter}}
-          >
-      </div>
+      data-page={{pagination.page}}
+      data-total={{pagination.total}}
+      data-filter={{filter}}
+      >
+  </div>
 {% endblock content %}
