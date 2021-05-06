@@ -21,12 +21,30 @@ module.exports = {
         next()
     },
     // Validar qual usuário cadastrou a receita
-    async recipeUser(req, res, next) {
+    async recipeUserEdit(req, res, next) {
         let result = await recipeModel.userRecipe(req.params.id)
-        const userId = result.rows[0].user_id
+        const user = result.rows[0]
 
         result = await userModel.isAdmin(req.session.user.id)
         const userAdmin = result.rows[0].is_admin
+
+        const userId = user.user_id
+
+        if ((userId != req.session.user.id) && (!userAdmin)) {
+            return res.redirect('./')
+        }
+
+        next()
+    },
+    // Validar qual usuário cadastrou a receita
+    async recipeUser(req, res, next) {
+        let result = await recipeModel.userRecipe(req.body.id)
+        const user = result.rows[0]
+
+        result = await userModel.isAdmin(req.session.user.id)
+        const userAdmin = result.rows[0].is_admin
+
+        const userId = user.user_id
 
         if ((userId != req.session.user.id) && (!userAdmin)) {
             return res.redirect('./')

@@ -1,5 +1,5 @@
 const db = require('../../config/db')
-const { age, date } = require('../../lib/utils')
+const { date } = require('../../lib/utils')
 const { hash } = require('bcryptjs') // Biblioteca para fazer o hash da senha
 
 module.exports = {
@@ -17,11 +17,11 @@ module.exports = {
             VALUES ($1, $2, $3, $4, $5, $6, $7)
             RETURNING id`
 
-            data.password = '123'
-            const passwordHash = await hash(data.password, 8)
+            // data.password = '123'
+            // const passwordHash = await hash(data.password, 8)
 
             const values = [
-                data.name, data.email, passwordHash || 1, data.reset_token, data.reset_token_expires, data.is_admin, date(Date.now()).iso
+                data.name, data.email, '123', data.reset_token, data.reset_token_expires, data.is_admin, date(Date.now()).iso
             ]
 
             return db.query(query, values)

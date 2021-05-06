@@ -19,26 +19,32 @@
         >
     </div>
 
-    <div class="tituloEdicao">Senha</div>
-    <span></span>
-    <div class="input">
-        <input 
-            type="password" 
-            name="password"
-            {% if not user.id %}
-                placeholder="Digite sua senha"
-            {%else%}
-                placeholder="Digite sua senha para atualizar o seu cadastro"
-            {%endif%}
-        >
-    </div>
-
-    <div class="inputCheckbox">
-        {% if user.is_admin %}
-            <input type="checkbox" name="is_admin" checked>
-        {% else %}
-            <input type="checkbox" name="is_admin">
-        {% endif %}
-        <label for="is_admin">Administrador</label>
-    </div>
+    {# {% if user.is_admin %} #}
+        <div class="tituloEdicao">Senha</div>
+        <span></span>
+        <div class="input">
+            <input 
+                type="password" 
+                name="password"
+                {% if not user.id %}
+                    placeholder="Digite sua senha"
+                {%else%}
+                    placeholder="Digite sua senha para atualizar o seu cadastro"
+                {%endif%}
+            >
+        </div>
+    {# {% else %}
+        <span></span>
+    {% endif %} #}
+    
+    {% if session.user.is_admin %}
+        <div class="inputCheckbox">
+            {% if user.is_admin %}
+                <input type="checkbox" name="is_admin" checked>
+            {% else %}
+                <input type="checkbox" name="is_admin">
+            {% endif %}
+            <label for="is_admin">Administrador</label>
+        </div>
+    {% endif %}        
 </div>

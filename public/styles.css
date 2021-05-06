@@ -852,6 +852,14 @@ textarea {
   margin-top: 20px;
 }
 
+.mt-60px {
+  margin-top: 60px;
+}
+
+.mb-20px {
+  margin-bottom: 20px;
+}
+
 .pb-20px {
   padding-bottom: 20px;
 }

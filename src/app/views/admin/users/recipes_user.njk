@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="content">
+        <h3 class="mt-60px mb-20px centralizar">Receitas cadastrada pelo usuário</h3>
+
+        <div class="listaReceitasAdm">
+        
+        {% for recipe in recipeUser %}
+            
+            <img class="imgReceitaAdm" src="{{ recipe.img }}" />
+
+            <div class="dadosInline">
+              <div class="tituloReceitaAdm">{{ recipe.title }}</div>
+              <div class="autorReceitaAdm">por {{ recipe.name }}</div>
+              <div><a href="/admin/recipes/{{ recipe.id }}">Visualizar</a></div>
+            </div>
+
+          {% endfor %}
+      <div>
+    </div>
+</div>

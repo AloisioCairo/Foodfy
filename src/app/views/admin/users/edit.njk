@@ -11,13 +11,15 @@
             </div>
 
             <form id="form-delete" method="POST" action="./?_method=DELETE">
-                <input type="hidden" name="id" value="{{ user.id }}">
+                <input type="text" name="id" value="{{ user.id }}">
             </form>
 
             <form id="form-put" class="pb-20px" method="POST" action="/admin/users?_method=PUT">
                 <input type="hidden" name="id" value="{{ user.id }}">
 
                 {% include './fields.njk' %}
+
+                {% include './recipes_user.njk' %}
 
             </form>
         </div>

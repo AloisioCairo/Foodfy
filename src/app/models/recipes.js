@@ -3,6 +3,7 @@ callback function */
 const { age, date } = require('../../lib/utils')
 const db = require('../../config/db')
 const { off } = require('../../config/db')
+const fs = require('fs')
 
 module.exports = {
     async maisAcessadas() {
@@ -21,8 +22,10 @@ module.exports = {
             VALUES ($1, $2, $3, $4, $5, $6, $7)
             RETURNING id`
 
+            console.log('data.user_id__' + data.user_id)
+
             const values = [
-                data.title, data.chef, data.ingredients, data.preparation, data.information, date(Date.now()).iso, data.userId
+                data.title, data.chef, data.ingredients, data.preparation, data.information, date(Date.now()).iso, data.user_id
             ]
 
             return db.query(query, values)
@@ -53,14 +56,22 @@ module.exports = {
             console.error('Erro ao atualizar o cadastro de uma receita. Erro: ' + err)
         }
     },
-    delete(id, callback) {
+    async delete(id, callback) {
         try {
-            db.query(`DELETE FROM recipes WHERE id = $1`, [id], function (err, results) {
-                if (err)
-                    throw `Erro ao tentar deletar a receita. ${err}`
+            // Seleciona todas as imagens da receita
+            let result = await this.files(id)
+            const recipeFiles = result.rows
 
-                return callback()
-            })
+            db.query(`DELETE FROM recipe_files WHERE recipe_id = $1`, [id])
+
+            for (i = 0; i < recipeFiles.length; i++) {
+                db.query(`DELETE FROM files WHERE id = $1`, [recipeFiles[i].file_id])
+
+                // Remove as imagens dos produtos que estão na pasta "public/images"
+                fs.unlinkSync(recipeFiles[i].path)
+            }
+
+            db.query(`DELETE FROM recipes WHERE id = $1`, [id])
         } catch (err) {
             console.error('Erro ao deletar uma receita. Erro: ' + err)
         }
@@ -99,9 +110,9 @@ module.exports = {
             console.error('Erro ao pesquisar pela principal imagem de uma receita. Erro: ' + err)
         }
     },
-    files(id_recipe) {
+    async files(id_recipe) {
         try {
-            return db.query(`SELECT recipe_files.id, files.path FROM files
+            return await db.query(`SELECT recipe_files.id, recipe_files.file_id, files.path FROM files
                 INNER JOIN recipe_files ON (recipe_files.file_id = files.id)
                 WHERE recipe_files.recipe_id = $1
                 ORDER BY files.id ASC`, [id_recipe])
@@ -111,7 +122,7 @@ module.exports = {
     },
     async userRecipe(id_recipe) {
         try {
-            return await db.query('SELECT * FROM recipes WHERE id = $1', [id_recipe])
+            return await db.query('SELECT user_id FROM recipes WHERE id = $1', [id_recipe])
         } catch (err) {
             console.error('Erro ao pesquisar o usuário responsável pela receita. Erro: ' + err)
         }
@@ -177,6 +188,16 @@ module.exports = {
             return db.query(query, [limit, offset])
         } catch (err) {
             console.error('Erro na paginação administrativa de receitas. Erro: ' + err)
+        }
+    },
+    async recipeUser(id_user) {
+        try {
+            return db.query(`SELECT recipes.id, title, chefs.name FROM recipes
+                INNER JOIN chefs ON (chefs.id = recipes.chef_id)
+                WHERE recipes.user_id = $1
+                ORDER BY recipes."title"`, [id_user])
+        } catch (err) {
+            console.error('Erro ao tentar selecionar as receitas cadastradas pelo usuário. Erro: ' + err)
         }
     }
 }

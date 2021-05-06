@@ -51,6 +51,10 @@ module.exports = {
         if (req.files.length == 0)
             return res.send('Por favor, informe ao menos uma imagem.')
 
+        req.body.user_id = req.session.user.id
+
+        console.log('req.session.user.id__' + req.session.user.id)
+
         let results = await Recipes.create(req.body)
         const recipeId = results.rows[0].id
 
@@ -199,10 +203,10 @@ module.exports = {
 
         return res.redirect(`./recipes/${req.body.id}`)
     },
-    delete(req, res) {
-        Recipes.delete(req.body.id, function () {
-            return res.redirect(`./recipes/`)
-        })
+    async delete(req, res) {
+        await Recipes.delete(req.body.id)
+
+        return res.redirect(`./recipes/`)
     },
     async findByReceitas(req, res) {
 
