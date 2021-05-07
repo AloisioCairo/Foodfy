@@ -2,6 +2,7 @@
 callback function */
 const { age, date } = require('../../lib/utils')
 const db = require('../../config/db')
+const fs = require('fs')
 
 module.exports = {
     async all(filter) {
@@ -72,7 +73,7 @@ module.exports = {
             console.error('Erro ao atualizar o cadastro de um chefe. Erro: ' + err)
         }
     },
-    delete(id, callback) {
+    async delete(id, callback) {
         try {
             db.query(`SELECT id FROM recipes WHERE chef_id = $1`, [id], function (err, results) {
                 if (err)
@@ -111,6 +112,14 @@ module.exports = {
             console.error('Erro ao pesquisar por um chefe. Erro: ' + err)
         }
     },
-    paginate(params) {
+    async fileImg(id) {
+        try {
+            return await db.query(`SELECT files.path
+                                   FROM files
+                                   LEFT JOIN chefs on (chefs.file_id = files.id)
+                                   WHERE chefs.id = $1`, [id])
+        } catch (err) {
+            console.error('Erro ao pesquisar por um chefe. Erro: ' + err)
+        }
     }
 }

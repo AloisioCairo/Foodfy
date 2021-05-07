@@ -175,8 +175,9 @@ module.exports = {
     delete(req, res) {
         Chefs.delete(req.body.id, function (recipe) {
 
-            if (recipe == null)
-                return res.redirect(`./chefs/`)
+            if (recipe == null) {
+                return res.redirect(`/admin/chefs`)
+            }
             else {
                 return res.redirect(`./caduso`)
             }

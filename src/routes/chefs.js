@@ -10,6 +10,6 @@ routes.get("/:id", chefs.show); // Exibir detalhes de um chefe
 routes.post("/", multer.array("photo", 1), chefs.post); // Cadastrar novo chefe
 routes.get("/:id/edit", session.userIsAdmin, chefs.edit); // Mostrar formulário de edição de chefe
 routes.put("/", multer.array("photo", 1), chefs.put); // Editar um chefe
-routes.delete("/chefs", session.userIsAdmin, chefs.delete); // Deletar um chefe
+routes.delete("/", session.userIsAdmin, chefs.delete); // Deletar um chefe
 
 module.exports = routes

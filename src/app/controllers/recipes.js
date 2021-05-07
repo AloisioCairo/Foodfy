@@ -140,16 +140,6 @@ module.exports = {
         }))
 
         return res.render("courses/show", { recipe, files })
-
-
-
-        /*Recipes.find(req.params.id, function (recipe) {
- 
-            if (!recipe)
-                return res.send('Receita não localizada.')
- 
-            return res.render("courses/show", { recipe })
-        })*/
     },
     async edit(req, res) {
         let results = await Recipes.find(req.params.id)

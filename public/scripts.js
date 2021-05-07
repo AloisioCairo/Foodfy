@@ -377,7 +377,6 @@ console.log("2__.add-modo-preparo")
 
 
 
-
 /* Modal
 const receita = document.querySelectorAll(".receita")
 const modal = document.querySelector("#modal")
