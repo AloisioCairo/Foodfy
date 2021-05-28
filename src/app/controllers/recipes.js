@@ -4,40 +4,51 @@ const File = require('../models/file')
 
 module.exports = {
     async maisAcessadas(req, res) {
+        try {
+            let results = await Recipes.maisAcessadas()
+            const recipes = results.rows
 
-        let results = await Recipes.maisAcessadas()
-        const recipes = results.rows
+            // Retorna a imagem principal da receita
+            async function getImage(recipeId) {
+                let results = await Recipes.findOneImageRecipe(recipeId)
+                const files = results.rows.map(file => `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`)
 
-        // Retorna a imagem principal da receita
-        async function getImage(recipeId) {
-            let results = await Recipes.findOneImageRecipe(recipeId)
-            const files = results.rows.map(file => `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`)
+                return files[0]
+            }
 
-            return files[0]
+            // Essa const retorna um array com as receitas do chefe
+            const recipesPromise = recipes.map(async recipe => {
+                recipe.img = await getImage(recipe.id)
+                recipe.name = recipe.name
+
+                return recipe
+            })
+
+            const recipesAdded = await Promise.all(recipesPromise)
+
+            return res.render(`courses.njk`, { recipes: recipesAdded })
+        } catch (error) {
+            console.error('Erro ao pesquisar pelas receitas mais acessadas. Erro: ' + error)
         }
-
-        // Essa const retorna um array com as receitas do chefe
-        const recipesPromise = recipes.map(async recipe => {
-            recipe.img = await getImage(recipe.id)
-            recipe.name = recipe.name
-
-            return recipe
-        })
-
-        const recipesAdded = await Promise.all(recipesPromise)
-
-        return res.render(`courses.njk`, { recipes: recipesAdded })
     },
-    lista(req, res) {
-        Recipes.all(function (recipes) {
-            return res.render("courses/index.njk", { recipes })
-        })
-    },
+    // lista(req, res) {
+    //     try {
+    //         Recipes.all(function (recipes) {
+    //             return res.render("courses/index.njk", { recipes })
+    //         })
+    //     } catch (error) {
+    //         console.error('Error ao tentar listar todas as receitas. Erro: ' + error)
+    //     }
+    // },
     async create(req, res) {
-        let results = await Recipes.chefSelectOptions()
-        const chefOptions = results.rows
+        try {
+            let results = await Recipes.chefSelectOptions()
+            const chefOptions = results.rows
 
-        return res.render("./admin/recipes/create.njk", { chefOptions })
+            return res.render("./admin/recipes/create.njk", { chefOptions })
+        } catch (error) {
+            console.error('Erro ao tentar criar uma nova receita. Erro: ' + error)
+        }
     },
     async post(req, res) {
         const keys = Object.keys(req.body)
@@ -53,7 +64,21 @@ module.exports = {
 
         req.body.user_id = req.session.user.id
 
-        console.log('req.session.user.id__' + req.session.user.id)
+        // let { title, chef, ingredients, preparation, information } = req.body
+        // let { title, chef, information } = req.body
+
+        // console.log('create_ingredients__' + ingredients)
+
+        // const recipeId = await Recipes.create({
+        //     title,
+        //     chef_id: chef,
+        //     ingredients: req.body.ingredients,
+        //     preparation: req.body.preparation,
+        //     information,
+        //     created_at: date(Date.now()).iso,
+        //     user_id: req.session.user.id
+        // })
+
 
         let results = await Recipes.create(req.body)
         const recipeId = results.rows[0].id

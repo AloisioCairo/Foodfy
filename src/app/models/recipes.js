@@ -4,8 +4,13 @@ const { age, date } = require('../../lib/utils')
 const db = require('../../config/db')
 const { off } = require('../../config/db')
 const fs = require('fs')
+const Base = require('./Base')
+const { Console } = require('console')
+
+Base.init({ table: 'recipes' })
 
 module.exports = {
+    // ...Base,
     async maisAcessadas() {
         try {
             return db.query(`SELECT recipes.id, title, chefs.name FROM recipes
@@ -14,66 +19,6 @@ module.exports = {
                 LIMIT 6`)
         } catch (err) {
             console.error('Erro ao tentar pesquisar pelas receitas mais acessadas. Erro: ' + err)
-        }
-    },
-    create(data) {
-        try {
-            const query = `INSERT INTO recipes (title, chef_id, ingredients, preparation, information, created_at, user_id)
-            VALUES ($1, $2, $3, $4, $5, $6, $7)
-            RETURNING id`
-
-            console.log('data.user_id__' + data.user_id)
-
-            const values = [
-                data.title, data.chef, data.ingredients, data.preparation, data.information, date(Date.now()).iso, data.user_id
-            ]
-
-            return db.query(query, values)
-        } catch (err) {
-            console.error('Erro ao cadastrar uma nova receita. Erro: ' + err)
-        }
-    },
-    async find(id) {
-        try {
-            return db.query(`SELECT recipes.*, chefs.name FROM recipes
-                LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
-                WHERE recipes.id = $1`, [id])
-        } catch (err) {
-            console.error('Erro ao pesquisar por uma receita. Erro: ' + err)
-        }
-    },
-    async update(data) {
-        try {
-            const query = `UPDATE recipes SET chef_id = $1, title = $2, ingredients = $3, preparation = $4, 
-                        information = $5 WHERE id = $6`
-
-            const values = [
-                data.chef, data.title, data.ingredients, data.preparation, data.information, data.id
-            ]
-
-            return db.query(query, values);
-        } catch (err) {
-            console.error('Erro ao atualizar o cadastro de uma receita. Erro: ' + err)
-        }
-    },
-    async delete(id, callback) {
-        try {
-            // Seleciona todas as imagens da receita
-            let result = await this.files(id)
-            const recipeFiles = result.rows
-
-            db.query(`DELETE FROM recipe_files WHERE recipe_id = $1`, [id])
-
-            for (i = 0; i < recipeFiles.length; i++) {
-                db.query(`DELETE FROM files WHERE id = $1`, [recipeFiles[i].file_id])
-
-                // Remove as imagens dos produtos que estão na pasta "public/images"
-                fs.unlinkSync(recipeFiles[i].path)
-            }
-
-            db.query(`DELETE FROM recipes WHERE id = $1`, [id])
-        } catch (err) {
-            console.error('Erro ao deletar uma receita. Erro: ' + err)
         }
     },
     async chefSelectOptions() {
@@ -198,6 +143,67 @@ module.exports = {
                 ORDER BY recipes."title"`, [id_user])
         } catch (err) {
             console.error('Erro ao tentar selecionar as receitas cadastradas pelo usuário. Erro: ' + err)
+        }
+    },
+    async find(id) {
+        try {
+            return db.query(`SELECT recipes.*, chefs.name FROM recipes
+                LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
+                WHERE recipes.id = $1`, [id])
+        } catch (err) {
+            console.error('Erro ao pesquisar por uma receita. Erro: ' + err)
+        }
+    },
+    create(data) {
+        try {
+            const query = `INSERT INTO recipes (title, chef_id, ingredients, preparation, information, created_at, user_id)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
+            RETURNING id`
+
+            const values = [
+                data.title, data.chef, data.ingredients, data.preparation, data.information, date(Date.now()).iso, data.user_id
+            ]
+
+            console.log('query__' + query)
+            console.log('values__' + values)
+
+            return db.query(query, values)
+        } catch (err) {
+            console.error('Erro ao cadastrar uma nova receita. Erro: ' + err)
+        }
+    },
+    async update(data) {
+        try {
+            const query = `UPDATE recipes SET chef_id = $1, title = $2, ingredients = $3, preparation = $4, 
+                        information = $5 WHERE id = $6`
+
+            const values = [
+                data.chef, data.title, data.ingredients, data.preparation, data.information, data.id
+            ]
+
+            return db.query(query, values);
+        } catch (err) {
+            console.error('Erro ao atualizar o cadastro de uma receita. Erro: ' + err)
+        }
+    },
+    async delete(id, callback) {
+        try {
+            // Seleciona todas as imagens da receita
+            let result = await this.files(id)
+            const recipeFiles = result.rows
+
+            db.query(`DELETE FROM recipe_files WHERE recipe_id = $1`, [id])
+
+            for (i = 0; i < recipeFiles.length; i++) {
+                db.query(`DELETE FROM files WHERE id = $1`, [recipeFiles[i].file_id])
+
+                // Remove as imagens dos produtos que estão na pasta "public/images"
+                fs.unlinkSync(recipeFiles[i].path)
+            }
+
+            db.query(`DELETE FROM recipes WHERE id = $1`, [id])
+        } catch (err) {
+            console.error('Erro ao deletar uma receita. Erro: ' + err)
         }
     }
 }

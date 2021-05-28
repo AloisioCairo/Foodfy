@@ -1,0 +1,56 @@
+{% extends "../header.njk" %}
+
+{% block content %}
+    <div class="container">
+        <div class="content">
+
+            <div class="editar">
+                <h3>Bem vindo {{user.name}}</h3>
+                <span></span>
+                <button form='form-put' class="botaoSalvar" type="submit">Salvar</button>
+            </div>
+
+            <form id="form-put" class="pb-20px" method="POST" action="/admin/users?_method=PUT">
+                <input type="hidden" name="id" value="{{ user.id }}">
+
+                <div class="formUsuario">
+                    <div class="tituloEdicao">Nome</div>
+                    <div class="tituloEdicao">Email</div>
+                    <div>
+                        <input 
+                            type="text" 
+                            name="name"
+                            value="{{ user.name }}"
+                            placeholder="Digite seu nome completo"
+                        >
+                    </div>
+
+                    <div>
+                        <input 
+                            type="email"
+                            name="email"
+                            value="{{ user.email }}"
+                            placeholder="Digite seu e-mail"
+                        >
+                    </div>
+
+                    <div class="tituloEdicao">Senha</div>
+                    <span></span>
+                    <div class="input">
+                        <input 
+                            type="password" 
+                            name="password"
+                            {% if not user.id %}
+                                placeholder="Digite sua senha"
+                            {%else%}
+                                placeholder="Digite sua senha para atualizar o seu cadastro"
+                            {%endif%}
+                        >
+                    </div>
+                </div>
+
+                {% include '../users/recipes_user.njk' %}
+            </form>
+        </div>
+    </div>
+{% endblock content %}

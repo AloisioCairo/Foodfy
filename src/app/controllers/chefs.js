@@ -1,10 +1,12 @@
+const { unlinkSync } = require('fs')
+
 const { age, date, format } = require('../../lib/utils')
 const Chefs = require('../models/chefs')
 const File = require('../models/file')
 const Recipes = require('../models/recipes')
 
 module.exports = {
-    lista(req, res) {
+    lista(res) {
         Chefs.all(function (chefs) {
             return res.render("courses/index.njk", { chefs })
         })
@@ -34,26 +36,32 @@ module.exports = {
         return res.render("chefs.njk", { chefs: chefAdded })
     },
     create(req, res) {
-        return res.render("./admin/chefs/create.njk")
+        try {
+            return res.render("./admin/chefs/create.njk")
+        } catch (error) {
+            console.error('Ocorreu um erro ao tentar criar um novo cadastro de chefe. Erro: ' + error)
+        }
     },
     async post(req, res) {
-        const keys = Object.keys(req.body)
+        try {
+            let { name } = req.body
 
-        for (key of keys) {
-            if (req.body[key] == "") {
-                return res.send('Por favor. Preencha todos os campos.')
-            }
+            // Salva a foto do chefe
+            const fileId = await Promise.all(req.files.map(file => File.create({
+                ...file,
+                recipe_id: 0
+            })))
+
+            const chef_id = await Chefs.create({
+                name,
+                created_at: date(Date.now()).iso,
+                file_id: fileId[0].rows[0].id
+            })
+
+            return res.redirect(`./chefs/${chef_id}`)
+        } catch (error) {
+            console.error('Ocorreu um erro ao tentar salvar um novo cadastro de chefe. Erro: ' + error)
         }
-
-        // Salva a foto do chefe
-        const fileId = await Promise.all(req.files.map(file => File.create({
-            ...file, recipe_id: 0
-        })))
-
-        results = await Chefs.create(req.body, fileId[0].rows[0].id)
-        const chefs = results.rows[0]
-
-        return res.redirect(`./chefs/${chefs.id}`)
     },
     async index(req, res) {
         const { filter } = req.query
@@ -128,6 +136,7 @@ module.exports = {
         // - - - - - - Funções para buscar os dados das receitas do chefe - - - - - -
         // Seleciona as receitas
         results = await Chefs.recipesChef(chef.id)
+        // results = await Chefs.find(chef.id)
         const resultsRecipesChef = results.rows
 
         // Retorna a imagem principal da receita
@@ -159,28 +168,58 @@ module.exports = {
 
         return res.render("./admin/chefs/edit.njk", { chef })
     },
-    put(req, res) {
-        const keys = Object.keys(req.body)
+    async put(req, res) {
+        try {
+            await Chefs.update(req.body.id, {
+                name: req.body.name
+            })
 
-        for (key of keys) {
-            if (req.body[key] == "") {
-                return res.send('Por favor. Preencha todos os campos.')
-            }
-        }
-
-        Chefs.update(req.body, function () {
             return res.redirect(`./chefs/${req.body.id}`)
-        })
+        } catch (error) {
+            console.error('Ocorreu um erro ao tentar salvar as alterações no cadastro de chefe. Erro: ' + error)
+        }
     },
-    delete(req, res) {
-        Chefs.delete(req.body.id, function (recipe) {
+    async delete(req, res) {
+        try {
+            const recipes = await Chefs.recipesChef(req.body.id)
 
-            if (recipe == null) {
+            if (recipes == null) {
+                const results = await Chefs.file(req.body.id)
+                const file = results.rows[0]
+
+                if (file != null)
+                    unlinkSync(file.path)
+
+                Chefs.delete(req.body.id)
+
                 return res.redirect(`/admin/chefs`)
             }
             else {
                 return res.redirect(`./caduso`)
             }
-        })
+
+
+
+
+            // const results = await Chefs.recipesChef(req.body.id)
+            // const recipes = results.rows[0]
+
+            // if (recipes == null) {
+            //     const results = await Chefs.file(req.body.id)
+            //     const file = results.rows[0]
+
+            //     if (file != null)
+            //         unlinkSync(file.path)
+
+            //     Chefs.delete(req.body.id)
+
+            //     return res.redirect(`/admin/chefs`)
+            // }
+            // else {
+            //     return res.redirect(`./caduso`)
+            // }
+        } catch (error) {
+            console.error('Ocorreu um erro ao tentar excluir o cadastro de chefe. Erro: ' + error)
+        }
     }
 }

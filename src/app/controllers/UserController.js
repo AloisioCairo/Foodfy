@@ -4,16 +4,27 @@ const recipeModel = require('../models/recipes')
 const { hash } = require('bcryptjs') // Biblioteca para fazer o hash da senha
 const mailer = require('../../lib/mailer')
 const crypto = require('crypto')
+const { date } = require('../../lib/utils')
 
 module.exports = {
     async list(req, res) {
-        let users = await userModel.all()
-        return res.render("./admin/users/index.njk", { users })
+        try {
+            const users = await userModel.findAll()
+            return res.render("./admin/users/index.njk", { users })
+        } catch (error) {
+            console.error('Erro ao tentar listar todos os usuários: Erro: ' + error)
+        }
     },
     async create(req, res) {
-        return res.render("./admin/users/create.njk")
+        try {
+            return res.render("./admin/users/create.njk")
+        } catch (error) {
+            console.error('Erro ao tentar criar um novo cadastro de usuário. Erro: ' + error)
+        }
     },
     async post(req, res) {
+        let { name, email, password, is_admin } = req.body
+
         const keys = Object.keys(req.body)
 
         for (key of keys) {
@@ -22,15 +33,24 @@ module.exports = {
             }
         }
 
-        let result = await userModel.create(req.body)
-        const user = result.rows[0]
-
-        // password = `${user.id}`
         password = crypto.randomBytes(20).toString("hex")
         const passwordHash = await hash(password, 8)
 
-        await userModel.updateField(user.id, {
-            password: passwordHash
+        // Cria o token para o usuário
+        const token = crypto.randomBytes(20).toString("hex")
+
+        // Cria a expiração do token
+        let now = new Date()
+        now = now.setHours(now.getHours + 1)
+
+        const user = await userModel.create({
+            name,
+            email,
+            password: passwordHash,
+            reset_token: token,
+            reset_token_expires: now,
+            // is_admin,
+            created_at: date(Date.now()).iso
         })
 
         // Envia o e-mail com um link de recuperação de senha
@@ -44,35 +64,41 @@ module.exports = {
         `,
         })
 
-        return res.redirect(`./users/${user.id}/edit`)
+        return res.redirect(`./users/${user}/edit`)
     },
     async edit(req, res) {
-        let result = await userModel.find(req.params.id)
-        const user = result.rows[0]
+        try {
+            const user = await userModel.find(req.params.id)
+            // const user = result.rows[0]
 
-        // Seleciona as receitas cadastrada pelo usuário
-        result = await recipeModel.recipeUser(user.id)
-        const recipesUser = result.rows
+            // Seleciona as receitas cadastrada pelo usuário 
+            result = await recipeModel.recipeUser(user.id)
+            const recipesUser = result.rows
 
-        // Retorna a imagem principal da receita
-        async function getImage(recipeId) {
-            let results = await recipeModel.findOneImageRecipe(recipeId)
-            const files = results.rows.map(file => `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`)
+            // Retorna a imagem principal da receita
+            async function getImage(recipeId) {
+                let results = await recipeModel.findOneImageRecipe(recipeId)
+                const files = results.rows.map(file => `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`)
 
-            return files[0]
+                return files[0]
+            }
+
+            // Essa const retorna um array com os dados das receitas
+            const recipesPromise = recipesUser.map(async recipe => {
+                recipe.img = await getImage(recipe.id)
+
+                return recipe
+            })
+            const recipesAdded = await Promise.all(recipesPromise)
+
+            return res.render("./admin/users/edit.njk", { user, recipeUser: recipesAdded })
+        } catch (error) {
+            console.error('Erro ao tentar editar o cadastro do usuário. Erro: ' + error)
         }
-
-        // Essa const retorna um array com os dados das receitas
-        const recipesPromise = recipesUser.map(async recipe => {
-            recipe.img = await getImage(recipe.id)
-
-            return recipe
-        })
-        const recipesAdded = await Promise.all(recipesPromise)
-
-        return res.render("./admin/users/edit.njk", { user, recipeUser: recipesAdded })
     },
     async put(req, res) {
+        let { name, email, is_admin } = req.body
+
         const keys = Object.keys(req.body)
 
         for (key of keys) {
@@ -81,7 +107,13 @@ module.exports = {
             }
         }
 
-        await userModel.update(req.body)
+        // const passwordHash = await hash(data.password, 8)
+
+        await userModel.update(req.body.id, {
+            name,
+            email,
+            is_admin: is_admin || false
+        })
         return res.redirect(`/admin/users`)
     },
     async delete(req, res) {

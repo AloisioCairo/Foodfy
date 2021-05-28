@@ -17,9 +17,11 @@
             <a href="/admin/recipes">RECEITAS</a>
             <a href="/admin/chefs">CHEFES</a>
             
-            {# {% if session.user.is_admin %} <!-- Variável global criada em 'server.js' --> #}
+            {% if session.user.is_admin %} <!-- Variável global criada em 'server.js' -->
               <a href="/admin/users">USUÁRIOS</a>
-            {# {% endif %} #}
+            {% else %}
+              <a href="/admin/profile">USUÁRIOS</a>
+            {% endif %}
         </div>
       </div>
 

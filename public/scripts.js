@@ -1,3 +1,51 @@
+
+// Função para adicionar um novo componente input para os ingredientes
+console.log(".add-ingrediente")
+function addIngredient() {
+    const ingredients = document.querySelector("#ingredients");
+    const fieldContainer = document.querySelectorAll(".ingredient");
+
+    // Realiza um clone do último ingrediente adicionado
+    const newField = fieldContainer[fieldContainer.length - 1].cloneNode(true);
+
+    // Não adiciona um novo input se o último tem um valor vazio
+    if (newField.children[0].value == "") return false;
+
+    // Deixa o valor do input vazio
+    newField.children[0].value = "";
+    ingredients.appendChild(newField);
+}
+
+document
+    .querySelector(".add-ingrediente")
+    .addEventListener("click", addIngredient);
+
+console.log("1__.add-ingrediente")
+
+
+
+// Função para adicionar um novo componente input para os modos de preparo
+function addModoPreparo() {
+    const modosPreparo = document.querySelector("#modosPreparo");
+    const fieldContainer = document.querySelectorAll(".modoPreparo");
+
+    // Realiza um clone do último modo de prepato adicionado
+    const newField = fieldContainer[fieldContainer.length - 1].cloneNode(true);
+
+    // Não adiciona um novo input se o último tem um valor vazio
+    if (newField.children[0].value == "") return false;
+
+    // Deixa o valor do input vazio
+    newField.children[0].value = "";
+    modosPreparo.appendChild(newField);
+}
+
+document
+    .querySelector(".add-modo-preparo")
+    .addEventListener("click", addModoPreparo);
+
+console.log("2__.add-modo-preparo")
+
 /* Membros - Lógica do menu ativo */
 const currentPage = location.pathname
 const menuItens = document.querySelectorAll("header .links a")
@@ -296,52 +344,52 @@ document
 
 
 
-// Função para adicionar um novo componente input para os ingredientes
-console.log(".add-ingrediente")
-function addIngredient() {
-    const ingredients = document.querySelector("#ingredients");
-    const fieldContainer = document.querySelectorAll(".ingredient");
+// // Função para adicionar um novo componente input para os ingredientes
+// console.log(".add-ingrediente")
+// function addIngredient() {
+//     const ingredients = document.querySelector("#ingredients");
+//     const fieldContainer = document.querySelectorAll(".ingredient");
 
-    // Realiza um clone do último ingrediente adicionado
-    const newField = fieldContainer[fieldContainer.length - 1].cloneNode(true);
+//     // Realiza um clone do último ingrediente adicionado
+//     const newField = fieldContainer[fieldContainer.length - 1].cloneNode(true);
 
-    // Não adiciona um novo input se o último tem um valor vazio
-    if (newField.children[0].value == "") return false;
+//     // Não adiciona um novo input se o último tem um valor vazio
+//     if (newField.children[0].value == "") return false;
 
-    // Deixa o valor do input vazio
-    newField.children[0].value = "";
-    ingredients.appendChild(newField);
-}
+//     // Deixa o valor do input vazio
+//     newField.children[0].value = "";
+//     ingredients.appendChild(newField);
+// }
 
-document
-    .querySelector(".add-ingrediente")
-    .addEventListener("click", addIngredient);
+// document
+//     .querySelector(".add-ingrediente")
+//     .addEventListener("click", addIngredient);
 
-console.log("1__.add-ingrediente")
+// console.log("1__.add-ingrediente")
 
 
 
-// Função para adicionar um novo componente input para os modos de preparo
-function addModoPreparo() {
-    const modosPreparo = document.querySelector("#modosPreparo");
-    const fieldContainer = document.querySelectorAll(".modoPreparo");
+// // Função para adicionar um novo componente input para os modos de preparo
+// function addModoPreparo() {
+//     const modosPreparo = document.querySelector("#modosPreparo");
+//     const fieldContainer = document.querySelectorAll(".modoPreparo");
 
-    // Realiza um clone do último modo de prepato adicionado
-    const newField = fieldContainer[fieldContainer.length - 1].cloneNode(true);
+//     // Realiza um clone do último modo de prepato adicionado
+//     const newField = fieldContainer[fieldContainer.length - 1].cloneNode(true);
 
-    // Não adiciona um novo input se o último tem um valor vazio
-    if (newField.children[0].value == "") return false;
+//     // Não adiciona um novo input se o último tem um valor vazio
+//     if (newField.children[0].value == "") return false;
 
-    // Deixa o valor do input vazio
-    newField.children[0].value = "";
-    modosPreparo.appendChild(newField);
-}
+//     // Deixa o valor do input vazio
+//     newField.children[0].value = "";
+//     modosPreparo.appendChild(newField);
+// }
 
-document
-    .querySelector(".add-modo-preparo")
-    .addEventListener("click", addModoPreparo);
+// document
+//     .querySelector(".add-modo-preparo")
+//     .addEventListener("click", addModoPreparo);
 
-console.log("2__.add-modo-preparo")
+// console.log("2__.add-modo-preparo")
 
 
 

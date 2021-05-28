@@ -30,6 +30,19 @@ module.exports = {
             console.error('Erro ao tentar inserir a image. Erro: ' + err)
         }
     },
+    // async createChef({ filename, path }) {
+    //     try {
+    //         let query = `INSERT INTO files (name, path)
+    //         VALUES ($1, $2)
+    //         RETURNING id`
+
+    //         let values = [filename, path]
+
+    //         return await db.query(query, values)
+    //     } catch (err) {
+    //         console.error('Erro ao tentar inserir a image no cadastro chefe. Erro: ' + err)
+    //     }
+    // },
     async delete(id) {
         try {
             const result = await db.query(`SELECT recipe_files.file_id, files.path FROM files

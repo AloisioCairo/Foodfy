@@ -3,6 +3,7 @@ const routes = express.Router()
 //const multer = require('./app/middlewares/multer')
 const recipes = require('../app/controllers/recipes')
 const chefs = require('../app/controllers/chefs')
+const ProfileController = require('../app/controllers/ProfileController')
 const routeUsers = require('./users')
 const routeChefs = require('./chefs')
 const routeRecipes = require('./recipes')
@@ -38,5 +39,9 @@ routes.get("/admin/caduso", function (req, res) {
 //routes.get("/courses/list", recipes.lista);
 routes.get("/courses/list", recipes.findByReceitas);
 routes.get('/courses/:id', recipes.exibe);
+
+// Rotas de perfil de um usuário logado
+routes.get('/admin/profile', ProfileController.index) // Mostrar o formulário com dados do usuário logado
+routes.put('/admin/profile', ProfileController.put)// Editar o usuário logado
 
 module.exports = routes
