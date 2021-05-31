@@ -25,14 +25,6 @@ module.exports = {
     async post(req, res) {
         let { name, email, password, is_admin } = req.body
 
-        const keys = Object.keys(req.body)
-
-        for (key of keys) {
-            if (req.body[key] == "" && key != "removed_files") {
-                return res.send('Por favor. Preencha todos os campos.')
-            }
-        }
-
         password = crypto.randomBytes(20).toString("hex")
         const passwordHash = await hash(password, 8)
 
@@ -49,7 +41,7 @@ module.exports = {
             password: passwordHash,
             reset_token: token,
             reset_token_expires: now,
-            // is_admin,
+            is_admin: is_admin || false,
             created_at: date(Date.now()).iso
         })
 
@@ -69,7 +61,6 @@ module.exports = {
     async edit(req, res) {
         try {
             const user = await userModel.find(req.params.id)
-            // const user = result.rows[0]
 
             // Seleciona as receitas cadastrada pelo usuário 
             result = await recipeModel.recipeUser(user.id)
@@ -97,21 +88,14 @@ module.exports = {
         }
     },
     async put(req, res) {
-        let { name, email, is_admin } = req.body
+        let { name, email, is_admin, password } = req.body
 
-        const keys = Object.keys(req.body)
-
-        for (key of keys) {
-            if (req.body[key] == "" && key != "removed_files") {
-                return res.send('Por favor. Preencha todos os campos.')
-            }
-        }
-
-        // const passwordHash = await hash(data.password, 8)
+        const passwordHash = await hash(password, 8)
 
         await userModel.update(req.body.id, {
             name,
             email,
+            password: passwordHash,
             is_admin: is_admin || false
         })
         return res.redirect(`/admin/users`)
@@ -121,12 +105,13 @@ module.exports = {
             return res.redirect('./')
         }
 
-        let result = await users.delete(req.body.id)
-        const recipe = result
+        let result = await recipeModel.recipeUser(req.body.id)
+        const recipe = result.rows[0]
 
         if (recipe != null) {
             return res.redirect(`/admin/caduso`)
         } else {
+            await users.delete(req.body.id)
             return res.redirect(`/admin/users`)
         }
     }

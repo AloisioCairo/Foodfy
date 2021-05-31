@@ -19,8 +19,8 @@ module.exports = {
                 const id_file = result.rows[0].id
 
                 query = `INSERT INTO recipe_files (recipe_id, file_id)
-            VALUES ($1, $2)
-            RETURNING id`
+                    VALUES ($1, $2)
+                    RETURNING id`
 
                 values = [recipe_id, id_file]
 
@@ -30,19 +30,6 @@ module.exports = {
             console.error('Erro ao tentar inserir a image. Erro: ' + err)
         }
     },
-    // async createChef({ filename, path }) {
-    //     try {
-    //         let query = `INSERT INTO files (name, path)
-    //         VALUES ($1, $2)
-    //         RETURNING id`
-
-    //         let values = [filename, path]
-
-    //         return await db.query(query, values)
-    //     } catch (err) {
-    //         console.error('Erro ao tentar inserir a image no cadastro chefe. Erro: ' + err)
-    //     }
-    // },
     async delete(id) {
         try {
             const result = await db.query(`SELECT recipe_files.file_id, files.path FROM files
@@ -50,7 +37,7 @@ module.exports = {
                 WHERE recipe_files.id = $1`, [id])
             const file = result.rows[0]
 
-            // Remove a imagem/arquivo da pasta "public"
+            // Remove a imagem/arquivo da pasta "public/images"
             fs.unlinkSync(file.path)
 
             db.query(`DELETE FROM recipe_files WHERE id = $1`, [id])
