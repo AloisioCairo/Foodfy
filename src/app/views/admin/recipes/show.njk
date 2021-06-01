@@ -14,25 +14,24 @@
         </div>
 
         <div class="galeriaImgReceita">
-          <img class="imgReceitaDet" src="{{ files[0].src }}"/>  
+          <img class="imgReceitaDet" src="{{ recipe.files[0].src }}"/>  
           
           <div class="previewImgReceita">
-            {% if allFiles %}
-              {% for image in allFiles %}
-                <img 
-                  src="{{ image.src }}" 
+            {% if recipe.files %}
+
+              {% for image in recipe.files %}
+                <img
+                  src="{{ image.src }}"
                   alt="{{ image.name }}"
-                  {% if loop.index0 == 0 %} 
+                  {% if loop.index0 == 0 %}
                       class="active"
                   {% endif %}
-                  onclick="alteraImagemGaleria.alteraImage(event)"  
+                  onclick="alteraImagemGaleria.alteraImage(event)"
                 />
               {% endfor %}
-              
+
             {% endif %}
-            
-            
-            
+
           </div>
         <div>
 
@@ -42,7 +41,7 @@
           </div>
           
           <div class="autorDetalhe">
-            por {{ recipe.name }}
+            por {{ recipe.nameChef }}
           </div>
         </div>
         

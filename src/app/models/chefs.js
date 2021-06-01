@@ -29,7 +29,7 @@ module.exports = {
             console.error('Erro ao listar todos os chefes. Erro: ' + err)
         }
     },
-    async find(id) {
+    async findChef(id) {
         try {
             return await db.query(`SELECT chefs.id, chefs.name, COUNT(recipes.id) AS qtde_receitas, files.path
                 FROM chefs

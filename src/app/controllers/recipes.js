@@ -1,6 +1,7 @@
 const { age, date, format } = require('../../lib/utils')
 const Recipes = require('../models/recipes')
 const File = require('../models/file')
+const LoadRecipesService = require('../services/LoadRecipesService')
 
 module.exports = {
     async maisAcessadas(req, res) {
@@ -31,19 +32,10 @@ module.exports = {
             console.error('Erro ao pesquisar pelas receitas mais acessadas. Erro: ' + error)
         }
     },
-    // lista(req, res) {
-    //     try {
-    //         Recipes.all(function (recipes) {
-    //             return res.render("courses/index.njk", { recipes })
-    //         })
-    //     } catch (error) {
-    //         console.error('Error ao tentar listar todas as receitas. Erro: ' + error)
-    //     }
-    // },
     async create(req, res) {
         try {
-            let results = await Recipes.chefSelectOptions()
-            const chefOptions = results.rows
+            let chefOptions = await Recipes.chefSelectOptions()
+            // const chefOptions = results.rows
 
             return res.render("./admin/recipes/create.njk", { chefOptions })
         } catch (error) {
@@ -63,22 +55,6 @@ module.exports = {
             return res.send('Por favor, informe ao menos uma imagem.')
 
         req.body.user_id = req.session.user.id
-
-        // let { title, chef, ingredients, preparation, information } = req.body
-        // let { title, chef, information } = req.body
-
-        // console.log('create_ingredients__' + ingredients)
-
-        // const recipeId = await Recipes.create({
-        //     title,
-        //     chef_id: chef,
-        //     ingredients: req.body.ingredients,
-        //     preparation: req.body.preparation,
-        //     information,
-        //     created_at: date(Date.now()).iso,
-        //     user_id: req.session.user.id
-        // })
-
 
         let results = await Recipes.create(req.body)
         const recipeId = results.rows[0].id
@@ -131,61 +107,53 @@ module.exports = {
         return res.render("./admin/recipes/index.njk", { recipes: recipesAdded, pagination, filter })
     },
     async show(req, res) {
-        let results = await Recipes.find(req.params.id)
-        const recipe = results.rows[0]
+        const recipe = await LoadRecipesService.load('recipe', {
+            where: {
+                id: req.params.id
+            }
+        })
 
-        if (!recipe)
-            return res.send('Receita não localizada.')
-
-        // Busca a 1º imagem selecionado no cadastro da receita
-        results = await Recipes.findOneImageRecipe(recipe.id)
-        const files = results.rows.map(file => ({
-            ...file,
-            src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
-        }))
-
-        // Busca todas as imagens do cadastro da receita
-        results = await Recipes.files(recipe.id)
-        const allFiles = results.rows.map(file => ({
-            ...file,
-            src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
-        }))
-
-        return res.render("./admin/recipes/show.njk", { recipe, files, allFiles })
+        return res.render("./admin/recipes/show.njk", { recipe })
     },
     async exibe(req, res) {
-        let results = await Recipes.find(req.params.id)
-        const recipe = results.rows[0]
+        let recipe = await LoadRecipesService.load('recipe', {
+            where: {
+                id: req.params.id
+            }
+        })
 
-        // Busca todas as imagens do cadastro da receita
-        results = await Recipes.findOneImageRecipe(recipe.id)
-        const files = results.rows.map(file => ({
-            ...file,
-            src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
-        }))
-
-        return res.render("courses/show", { recipe, files })
+        return res.render("courses/show", { recipe })
     },
     async edit(req, res) {
-        let results = await Recipes.find(req.params.id)
-        const recipe = results.rows[0]
+        const recipe = await LoadRecipesService.load('recipe', {
+            where: {
+                id: req.params.id
+            }
+        })
 
-        if (!recipe)
-            return res.send('Receita não localizada.')
+        let chefOptions = await Recipes.chefSelectOptions()
 
-        results = await Recipes.chefSelectOptions()
-        let chefOptions = results.rows
+        return res.render("./admin/recipes/edit.njk", { recipe, chefOptions })
 
-        // Busca as imagens da receita
-        results = await Recipes.files(recipe.id)
-        let files = results.rows
+        // let results = await Recipes.find(req.params.id)
+        // const recipe = results.rows[0]
 
-        files = files.map(file => ({
-            ...file,
-            src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
-        }))
+        // if (!recipe)
+        //     return res.send('Receita não localizada.')
 
-        return res.render("./admin/recipes/edit.njk", { recipe, chefOptions, files })
+        // results = await Recipes.chefSelectOptions()
+        // let chefOptions = results.rows
+
+        // // Busca as imagens da receita
+        // results = await Recipes.files(recipe.id)
+        // let files = results.rows
+
+        // files = files.map(file => ({
+        //     ...file,
+        //     src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
+        // }))
+
+        // return res.render("./admin/recipes/edit.njk", { recipe, chefOptions, files })
     },
     async put(req, res) {
         const keys = Object.keys(req.body)
@@ -224,7 +192,6 @@ module.exports = {
         return res.redirect(`./recipes/`)
     },
     async findByReceitas(req, res) {
-
         let { filter, page, limit } = req.query
 
         page = page || 1
@@ -265,6 +232,5 @@ module.exports = {
         const recipesAdded = await Promise.all(recipesPromise)
 
         return res.render(`recipes_filter.njk`, { recipes: recipesAdded, pagination, filter })
-
     }
 }

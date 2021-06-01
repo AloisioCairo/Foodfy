@@ -47,7 +47,6 @@ const Base = {
             Object.keys(fields).map(key => {
                 keys.push(key)
                 values.push(`'${fields[key]}'`)
-                // values.push(`${fields[key]}`)
             })
 
             console.log('create 2')

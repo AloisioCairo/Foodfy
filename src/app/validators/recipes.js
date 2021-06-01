@@ -9,6 +9,9 @@ async function post(req, res, next) {
         }
     }
 
+    // if (req.files.length == 0)
+    //     return res.send('Por favor, informe ao menos uma imagem.')
+
 
     if (!req.files || req.files.length == 0) {
         return res.render("../views/admin/recipes/create", {

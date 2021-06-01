@@ -10,7 +10,7 @@ const { Console } = require('console')
 Base.init({ table: 'recipes' })
 
 module.exports = {
-    // ...Base,
+    ...Base,
     async maisAcessadas() {
         try {
             return db.query(`SELECT recipes.id, title, chefs.name FROM recipes
@@ -23,7 +23,8 @@ module.exports = {
     },
     async chefSelectOptions() {
         try {
-            return await db.query(`SELECT id, name FROM chefs`)
+            const results = await db.query(`SELECT id, name FROM chefs`)
+            return results.rows
         } catch (err) {
             console.error('Erro ao selecionar todos os cadastros de chefes. Erro: ' + err)
         }
@@ -57,10 +58,12 @@ module.exports = {
     },
     async files(id_recipe) {
         try {
-            return await db.query(`SELECT recipe_files.id, recipe_files.file_id, files.path FROM files
+            const results = await db.query(`SELECT recipe_files.id, recipe_files.file_id, files.path FROM files
                 INNER JOIN recipe_files ON (recipe_files.file_id = files.id)
                 WHERE recipe_files.recipe_id = $1
                 ORDER BY files.id ASC`, [id_recipe])
+
+            return results.rows
         } catch (err) {
             console.error('Erro ao pesquisar as imagens de uma receita. Erro: ' + err)
         }
@@ -145,15 +148,6 @@ module.exports = {
             console.error('Erro ao tentar selecionar as receitas cadastradas pelo usuário. Erro: ' + err)
         }
     },
-    async find(id) {
-        try {
-            return db.query(`SELECT recipes.*, chefs.name FROM recipes
-                LEFT JOIN chefs ON (chefs.id = recipes.chef_id)
-                WHERE recipes.id = $1`, [id])
-        } catch (err) {
-            console.error('Erro ao pesquisar por uma receita. Erro: ' + err)
-        }
-    },
     create(data) {
         try {
             const query = `INSERT INTO recipes (title, chef_id, ingredients, preparation, information, created_at, user_id)
@@ -188,9 +182,7 @@ module.exports = {
     },
     async delete(id, callback) {
         try {
-            // Seleciona todas as imagens da receita
-            let result = await this.files(id)
-            const recipeFiles = result.rows
+            let recipeFiles = await this.files(id)
 
             db.query(`DELETE FROM recipe_files WHERE recipe_id = $1`, [id])
 
