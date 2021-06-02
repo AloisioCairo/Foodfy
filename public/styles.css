@@ -23,7 +23,7 @@ body {
 }
 
 header {
-  background-color: white;
+  background-color: rgb(253, 251, 251);
   width: 100%;
   padding: 30px;
   box-sizing: border-box; /* Configura o conteudo a toda a largura do conteudo, sendo assim 100% (width) */
@@ -85,6 +85,11 @@ a {
 
 .content {
   background-color: white;
+  min-height: 100vh;
+  /* height: 100vh; */
+}
+
+.content.headerAdmin {
   height: 100vh;
 }
 
@@ -919,17 +924,20 @@ textarea {
 }
 
 footer {
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-
-  background: #e6e3e1;
   text-align: center;
   font-size: 14px;
-  color: #444444;
+  color: #ebe9e9;
   border-top: 1px solid #c5bfbf;
 
   margin-top: auto;
+
+  background-color: rgb(24, 23, 23);
+  width: 100%;
+  padding: 30px 0;
+
+  display: block;
+  position: relative;
+  clear: both;
 }
 
 .inicioo {
@@ -963,12 +971,6 @@ footer {
   line-height: 28px;
   font-size: 15px;
   color: #444444;
-}
-
-footer {
-  background-color: black;
-  height: 30px;
-  color: #c5bfbf;
 }
 
 .listaUsuariosAdm {

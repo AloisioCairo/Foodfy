@@ -116,22 +116,14 @@ module.exports = {
         }
     },
     async show(req, res) {
-        let results = await Chefs.find(req.params.id)
-        const chef = results.rows[0]
-
-        if (!chef)
-            return res.send('Chefe não localizado.')
+        let chef = await Chefs.find(req.params.id)
 
         // Seleciona a foto
-        results = await Chefs.file(chef.id)
+        let results = await Chefs.file(chef.id)
         const files = results.rows.map(file => ({
             ...file,
             src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
         }))
-
-
-
-
 
         // - - - - - - Funções para buscar os dados das receitas do chefe - - - - - -
         // Seleciona as receitas
