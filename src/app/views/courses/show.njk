@@ -22,8 +22,8 @@
         <h3 class="mt-20px">Ingredientes
           <button class="buttonIngrediente">ESCONDER</button>
         </h3>
-
-        <div class="itemIngredienteReceita">
+                                            
+        <div class="itemIngredienteReceita" id="itemIngredienteReceita">
           {% for ingredient in recipe.ingredients %}
             <li>- {{ ingredient }}</li>
           {% endfor %}

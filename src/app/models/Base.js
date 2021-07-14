@@ -49,13 +49,9 @@ const Base = {
                 values.push(`'${fields[key]}'`)
             })
 
-            console.log('create 2')
-
             const query = `INSERT INTO ${this.table} (${keys.join(',')}) 
                 VALUES (${values.join(',')})
                 RETURNING id`
-
-            console.log('create 3__' + query)
 
             const results = await db.query(query)
 
@@ -77,8 +73,6 @@ const Base = {
 
             let query = `UPDATE ${this.table} SET
                 ${update.join(',')} WHERE id = ${id}`
-
-            // console.log('UPDATE_query__' + query)
 
             return db.query(query)
 

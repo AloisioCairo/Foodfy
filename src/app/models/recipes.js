@@ -158,9 +158,6 @@ module.exports = {
                 data.title, data.chef, data.ingredients, data.preparation, data.information, date(Date.now()).iso, data.user_id
             ]
 
-            console.log('query__' + query)
-            console.log('values__' + values)
-
             return db.query(query, values)
         } catch (err) {
             console.error('Erro ao cadastrar uma nova receita. Erro: ' + err)
